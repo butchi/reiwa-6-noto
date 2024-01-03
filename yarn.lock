@@ -7023,7 +7023,7 @@ vue-eslint-parser@^9.1.0, vue-eslint-parser@^9.3.1:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
-vue@^3.3.13, vue@^3.4.3:
+vue@^3.3.13, vue@^3.4.4:
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.4.4.tgz#49b84c8a936c0d5b65a6839f97c576d249fd800e"
   integrity sha512-suZXgDVT8lRNhKmxdkwOsR0oyUi8is7mtqI18qW97JLoyorEbE9B2Sb4Ws/mR/+0AgA/JUtsv1ytlRSH3/pDIA==
