@@ -34,6 +34,7 @@ const dialog = ref(true)
             <v-row>
               <v-col md="4">
                 <v-btn
+                  class="w-100"
                   size="x-large"
                   color="error"
                 >
@@ -42,6 +43,7 @@ const dialog = ref(true)
               </v-col>
               <v-col md="4">
                 <v-btn
+                  class="w-100"
                   size="x-large"
                   color="accent"
                 >
@@ -50,6 +52,7 @@ const dialog = ref(true)
               </v-col>
               <v-col md="4">
                 <v-btn
+                  class="w-100"
                   size="x-large"
                   color="primary"
                 >
