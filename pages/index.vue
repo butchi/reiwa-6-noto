@@ -1,0 +1,22 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title>
+            <h2>一次情報まとめサイト</h2>
+          </v-card-title>
+          <v-card-actions>
+            <v-btn
+              color="accent"
+              variant="elevated"
+              href="/"
+            >
+              More
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
