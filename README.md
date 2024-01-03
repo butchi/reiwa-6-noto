@@ -1,4 +1,5 @@
 # reiwa-6-noto
+
 令和6年能登半島地震 一次情報まとめサイト
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
