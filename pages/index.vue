@@ -9,6 +9,24 @@ const dialog = ref(false)
 <template>
   <v-container>
     <v-row>
+      <v-col>
+        <v-sheet
+          elevation="12"
+          max-width="600"
+          rounded="lg"
+          width="100%"
+          class="pa-3 text-center mx-auto"
+        >
+          <h2 class="text-h5 mb-6">
+            情報随時更新中
+          </h2>
+
+          <p class="mb-1 text-medium-emphasis text-body-2">
+            令和6年能登半島地震に関する一次情報（主に政府発表資料）をまとめたサイトです。リアルタイム更新中なので今後大幅に内容が変わる可能性があります。
+          </p>
+        </v-sheet>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <v-card>
