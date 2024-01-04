@@ -15,7 +15,7 @@ const drawer = useState("drawer", () => false)
         variant="text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title>令和6年能登半島地震 一次情報まとめサイト</v-toolbar-title>
+      <v-toolbar-title>災害一次情報まとめサイト</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <slot />
