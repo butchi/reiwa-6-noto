@@ -1,7 +1,7 @@
-import { type ThemeDefinition, createVuetify } from "vuetify"
-import colors from "vuetify/lib/util/colors.mjs"
-import * as components from "vuetify/components"
-import * as directives from "vuetify/directives"
+import { type ThemeDefinition, createVuetify } from 'vuetify'
+import colors from 'vuetify/lib/util/colors.mjs'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
 const light: ThemeDefinition = {
     dark: false,
