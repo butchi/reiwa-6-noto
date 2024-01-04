@@ -44,7 +44,7 @@ const dialog = ref(false)
           <v-expansion-panels>
             <v-expansion-panel
               v-for="linkItem in linkArr"
-              :key="linkItem.idx"
+              :key="linkItem['source-idx']"
             >
               <v-expansion-panel-title>
                 <v-list
@@ -52,11 +52,15 @@ const dialog = ref(false)
                   lines="three"
                 >
                   <v-list-item
+                    class="pa-0"
                     :title="linkItem.ttl"
                     :subtitle="linkItem.desc"
                   >
                     <template #prepend>
-                      <v-avatar :color="linkItem['avatar-bg']">
+                      <v-avatar
+                        class="mt-3"
+                        :color="linkItem['avatar-bg']"
+                      >
                         <v-icon :color="linkItem['avatar-color']">
                           {{ linkItem['avatar-icon'] }}
                         </v-icon>
@@ -64,15 +68,18 @@ const dialog = ref(false)
                     </template>
                     <template #title>
                       <a
+                        v-if="linkItem.url"
                         :href="linkItem.url"
                         target="_blank"
                       >{{ linkItem.ttl }}</a>
+                      <span v-else>{{ linkItem.ttl }}</span>
                     </template>
                   </v-list-item>
                 </v-list>
               </v-expansion-panel-title>
               <v-expansion-panel-text>
                 <v-list
+                  class="pa-0"
                   lines="three"
                 >
                   <v-list-item
@@ -80,6 +87,7 @@ const dialog = ref(false)
                     :key="childItem['source-idx']"
                     :title="childItem.ttl"
                     :subtitle="childItem.desc"
+                    class="pa-0"
                   >
                     <template #prepend>
                       <v-avatar :color="childItem['avatar-bg']">
@@ -90,9 +98,11 @@ const dialog = ref(false)
                     </template>
                     <template #title>
                       <a
+                        v-if="childItem.url"
                         :href="childItem.url"
                         target="_blank"
                       >{{ childItem.ttl }}</a>
+                      <span v-else>{{ childItem.ttl }}</span>
                     </template>
                   </v-list-item>
                 </v-list>
