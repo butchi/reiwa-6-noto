@@ -3,6 +3,23 @@ import { useState } from "nuxt/app"
 
 import logoXImg from "@/assets/logo-x-black.svg"
 
+const drawerArr = [
+    {
+        to: "/",
+        icon: "mdi-home",
+        title: "Home",
+    },
+    {
+        // to: "/about/",
+        icon: "mdi-information",
+        title: "このサイトについて",
+    },
+    {
+        // to: "/credit/",
+        icon: "mdi-account",
+        title: "制作メンバー",
+    },
+]
 
 const drawer = useState("drawer", () => false)
 </script>
@@ -45,6 +62,23 @@ const drawer = useState("drawer", () => false)
         </v-avatar>
       </v-btn>
     </v-app-bar>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+      :style="{ 'position': 'fixed' }"
+    >
+      <v-list>
+        <v-list-item
+          v-for="item in drawerArr"
+          :key="item.title"
+          :to="item.to"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :disabled="!item.to"
+        />
+      </v-list>
+    </v-navigation-drawer>
     <v-main>
       <slot />
     </v-main>
