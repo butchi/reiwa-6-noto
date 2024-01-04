@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useState } from "nuxt/app"
 
+import logoXImg from "@/assets/logo-x-black.svg"
+
+
 const drawer = useState("drawer", () => false)
 </script>
 
@@ -15,7 +18,32 @@ const drawer = useState("drawer", () => false)
         variant="text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title>災害一次情報まとめサイト</v-toolbar-title>
+      <v-toolbar-title>🏠 Home</v-toolbar-title>
+      <v-spacer />
+      <v-btn
+        icon
+        flat
+      >
+        <v-img
+          contain
+          width="25"
+          height="25"
+          :src="logoXImg"
+        />
+      </v-btn>
+      <v-btn
+        class="mr-5"
+        icon
+        flat
+        href="https://github.com/butchi/reiwa-6-noto"
+        target="_blank"
+      >
+        <v-avatar>
+          <v-icon size="x-large">
+            mdi-github
+          </v-icon>
+        </v-avatar>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <slot />

@@ -28,9 +28,12 @@ const dialog = ref(false)
           width="100%"
           class="pa-3 text-center mx-auto"
         >
-          <h2 class="text-h5 mb-3">
-            情報随時更新中
+          <h2 class="text-h5 mb-1">
+            災害一次情報まとめ
           </h2>
+          <p class="text-h6 mb-3">
+            情報随時更新中
+          </p>
 
           <p class="mb-1 text-medium-emphasis text-body-2">
             令和6年能登半島地震に関する一次情報（主に政府発表資料）をまとめたサイトです。リアルタイム更新中なので今後大幅に内容が変わる可能性があります。
