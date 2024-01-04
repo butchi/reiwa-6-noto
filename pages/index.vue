@@ -28,7 +28,7 @@ const dialog = ref(false)
           width="100%"
           class="pa-3 text-center mx-auto"
         >
-          <h2 class="text-h5 mb-6">
+          <h2 class="text-h5 mb-3">
             情報随時更新中
           </h2>
 
