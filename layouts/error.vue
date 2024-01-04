@@ -36,8 +36,3 @@ export default {
     },
 }
 </script>
-
-<style lang="sass" scoped>
-h1
-  font-size: 20px
-</style>
