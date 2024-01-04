@@ -1,26 +1,67 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const dialog = ref(true)
+const dialog = ref(false)
+
+
 </script>
 
 <template>
   <v-container>
     <v-row>
+    <v-row>
       <v-col>
         <v-card>
-          <v-card-title>
-            <h2>一次情報まとめサイト</h2>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn
-              color="accent"
-              variant="elevated"
-              href="/"
+          <v-expansion-panels>
+            <v-expansion-panel
+              v-for="linkItem in linkArr"
+              :key="linkItem.slug"
             >
-              More
-            </v-btn>
-          </v-card-actions>
+              <v-expansion-panel-title>
+                <v-list
+                  class="bg-transparent"
+                  lines="three"
+                >
+                  <v-list-item
+                    :title="linkItem.title"
+                    :subtitle="linkItem.subtitle"
+                  >
+                    <template #prepend>
+                      <v-avatar :color="linkItem.avatar.background">
+                        <v-icon :color="linkItem.avatar.color">{{ linkItem.avatar.icon }}</v-icon>
+                      </v-avatar>
+                    </template>
+                    <template #title>
+                      <a :href="linkItem.href" target="_blank">{{ linkItem.title }}</a>
+                    </template>
+                  </v-list-item>
+                </v-list>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <v-list
+                  lines="three"
+                >
+                  <v-list-item
+                    v-for="(childItem, idx) in linkItem.children"
+                    :key="idx"
+                    :title="childItem.title"
+                    :subtitle="childItem.subtitle"
+                  >
+                    <template #prepend>
+                      <v-avatar :color="childItem.avatar.background">
+                        <v-icon :color="childItem.avatar.color">
+                          {{ childItem.avatar.icon }}
+                        </v-icon>
+                      </v-avatar>
+                    </template>
+                    <template #title>
+                      <a :href="childItem.href" target="_blank">{{ childItem.title }}</a>
+                    </template>
+                  </v-list-item>
+                </v-list>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-card>
       </v-col>
     </v-row>
