@@ -4,23 +4,23 @@ export default defineNuxtConfig({
     app: {
         head: {
             htmlAttrs: {
-                lang: "ja",
+                lang: 'ja',
             },
         },
     },
-    css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css"],
+    css: ['vuetify/styles', '@mdi/font/css/materialdesignicons.css'],
     build: {
-        transpile: ["vuetify"],
+        transpile: ['vuetify'],
     },
     components: {
         global: true,
-        dirs: ["~/components"],
+        dirs: ['~/components'],
     },
-    modules: ["@nuxt/content"],
+    modules: ['@nuxt/content'],
     runtimeConfig: {
         public: {
-            nodeEnv: process?.env?.NODE_ENV || "production",
-            baseUrl: process?.env?.NUXT_BASE_URL || "https://butchi.github.io/reiwa-6-noto/",
+            nodeEnv: process?.env?.NODE_ENV || 'production',
+            baseUrl: process?.env?.NUXT_BASE_URL || 'https://butchi.github.io/reiwa-6-noto/',
         },
     },
 })
