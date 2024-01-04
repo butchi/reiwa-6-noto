@@ -20,6 +20,8 @@ const drawer = useState("drawer", () => false)
     <v-main>
       <slot />
     </v-main>
-    <v-footer />
+    <v-footer class="bg-grey-darken-4">
+      &copy; IWABUCHI Yu(u)ki butchi
+    </v-footer>
   </v-app>
 </template>
