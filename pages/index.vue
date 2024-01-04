@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useAsyncData } from 'nuxt/app'
+import { ref } from 'vue'
 
 const { data } = await useAsyncData('sheet', () =>
     queryContent('sheet').findOne()
@@ -43,7 +44,7 @@ const dialog = ref(false)
           <v-expansion-panels>
             <v-expansion-panel
               v-for="linkItem in linkArr"
-              :key="linkItem.slug"
+              :key="linkItem.idx"
             >
               <v-expansion-panel-title>
                 <v-list
@@ -51,16 +52,21 @@ const dialog = ref(false)
                   lines="three"
                 >
                   <v-list-item
-                    :title="linkItem.title"
-                    :subtitle="linkItem.subtitle"
+                    :title="linkItem.ttl"
+                    :subtitle="linkItem.desc"
                   >
                     <template #prepend>
-                      <v-avatar :color="linkItem.avatar.background">
-                        <v-icon :color="linkItem.avatar.color">{{ linkItem.avatar.icon }}</v-icon>
+                      <v-avatar :color="linkItem['avatar-bg']">
+                        <v-icon :color="linkItem['avatar-color']">
+                          {{ linkItem['avatar-icon'] }}
+                        </v-icon>
                       </v-avatar>
                     </template>
                     <template #title>
-                      <a :href="linkItem.href" target="_blank">{{ linkItem.title }}</a>
+                      <a
+                        :href="linkItem.url"
+                        target="_blank"
+                      >{{ linkItem.ttl }}</a>
                     </template>
                   </v-list-item>
                 </v-list>
@@ -70,20 +76,23 @@ const dialog = ref(false)
                   lines="three"
                 >
                   <v-list-item
-                    v-for="(childItem, idx) in linkItem.children"
-                    :key="idx"
-                    :title="childItem.title"
-                    :subtitle="childItem.subtitle"
+                    v-for="childItem in linkItem.childArr"
+                    :key="childItem['source-idx']"
+                    :title="childItem.ttl"
+                    :subtitle="childItem.desc"
                   >
                     <template #prepend>
-                      <v-avatar :color="childItem.avatar.background">
-                        <v-icon :color="childItem.avatar.color">
-                          {{ childItem.avatar.icon }}
+                      <v-avatar :color="childItem['avatar-bg']">
+                        <v-icon :color="childItem['avatar-color']">
+                          {{ childItem['avatar-icon'] }}
                         </v-icon>
                       </v-avatar>
                     </template>
                     <template #title>
-                      <a :href="childItem.href" target="_blank">{{ childItem.title }}</a>
+                      <a
+                        :href="childItem.url"
+                        target="_blank"
+                      >{{ childItem.ttl }}</a>
                     </template>
                   </v-list-item>
                 </v-list>
