@@ -39,7 +39,7 @@ const dialog = ref(false)
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col class="mb-15">
         <v-card>
           <v-expansion-panels>
             <v-expansion-panel
