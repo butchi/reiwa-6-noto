@@ -8,16 +8,21 @@ import logoImg from "@/assets/logo.png"
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
-const { data } = await useAsyncData('sheet', () =>
+const { data: channelData } = await useAsyncData('channel-list', () =>
+    queryContent('channel-list').findOne()
+)
+
+const { data: sourceData } = await useAsyncData('sheet', () =>
     queryContent('sheet').findOne()
 )
 
-const body = data.value?.body as Array ?? []
+const channelBody = channelData.value?.body as Array ?? []
+const sourceBody = sourceData.value?.body as Array ?? []
 
-const linkArr = body.filter(item => item['source-idx'] === '')
+const linkArr = channelBody
 
 linkArr.forEach(linkItem => {
-  linkItem.childArr = body.filter(item => item['site'] === linkItem['site'] && parseInt(item['source-idx']) > 0).reverse()
+  linkItem.childArr = sourceBody.filter(item => item['site'] === linkItem['site']).reverse()
 })
 
 const dialog = ref(false)
