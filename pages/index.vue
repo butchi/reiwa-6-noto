@@ -26,7 +26,7 @@ const description = "主に防災に関する一次情報をポストしてい�
 const ogImg = "ogp.png"
 
 useHead({
-    title: title + " | " + siteName,
+    title,
     meta: [
         { property: "title", content: title },
         { property: "description", content: description },
