@@ -10,12 +10,12 @@ const drawerArr = [
         title: "Home",
     },
     {
-        // to: "/about/",
+        to: "/about/",
         icon: "mdi-information",
         title: "このサイトについて",
     },
     {
-        // to: "/credit/",
+        to: "/credit/",
         icon: "mdi-account",
         title: "制作メンバー",
     },
@@ -35,7 +35,7 @@ const drawer = useState("drawer", () => false)
         variant="text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title>🏠 Home</v-toolbar-title>
+      <v-toolbar-title>SPW防災</v-toolbar-title>
       <v-spacer />
       <v-btn
         icon
