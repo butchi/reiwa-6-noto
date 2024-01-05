@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead } from "nuxt/app"
+import { useRuntimeConfig, useHead } from "nuxt/app"
 import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
 
@@ -38,7 +38,8 @@ useHead({
           クレジット
         </h2>
 
-        <p>企画・制作: 岩淵夕希物智
+        <p>
+          企画・制作: 岩淵夕希物智
           <a
             href="https://x.com/butchi_y"
             target="_blank"
