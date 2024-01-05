@@ -94,7 +94,7 @@ const drawer = useState("drawer", () => false)
       <slot />
     </v-main>
     <v-footer class="bg-grey-darken-4">
-      &copy; IWABUCHI Yu(u)ki butchi
+      &copy; SPW
     </v-footer>
   </v-app>
 </template>
