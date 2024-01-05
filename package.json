@@ -1,6 +1,6 @@
 {
-    "name": "nuxt-app",
-    "private": true,
+    "name": "reiwa-6-noto",
+    "private": false,
     "type": "module",
     "scripts": {
         "build": "nuxt build",
