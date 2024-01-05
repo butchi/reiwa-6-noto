@@ -40,6 +40,8 @@ const drawer = useState("drawer", () => false)
       <v-btn
         icon
         flat
+        href="https://x.com/spw_bousai"
+        target="_blank"
       >
         <v-img
           contain
