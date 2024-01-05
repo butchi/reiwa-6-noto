@@ -107,6 +107,7 @@ useHead({
                   </v-list-item>
                 </v-list>
               </v-expansion-panel-title>
+              <client-only>
               <v-expansion-panel-text>
                 <v-list
                   class="pa-0"
@@ -137,6 +138,7 @@ useHead({
                   </v-list-item>
                 </v-list>
               </v-expansion-panel-text>
+              </client-only>
             </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
