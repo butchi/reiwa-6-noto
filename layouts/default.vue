@@ -44,10 +44,10 @@ const drawer = useState("drawer", () => false)
           <v-avatar size="small">
             <v-img :src="logoImg" />
           </v-avatar>
-          SPW防災
+          SPW防災サイト
         </nuxt-link>
       </v-toolbar-title>
-      <v-spacer />
+      <template #append>
       <v-btn
         icon
         flat
@@ -61,6 +61,7 @@ const drawer = useState("drawer", () => false)
           :src="logoXImg"
         />
       </v-btn>
+      </template>
     </v-app-bar>
     <client-only>
       <v-navigation-drawer
