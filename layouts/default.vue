@@ -48,19 +48,34 @@ const drawer = useState("drawer", () => false)
         </nuxt-link>
       </v-toolbar-title>
       <template #append>
-      <v-btn
-        icon
-        flat
-        href="https://x.com/spw_bousai"
-        target="_blank"
-      >
-        <v-img
-          contain
-          width="25"
-          height="25"
-          :src="logoXImg"
-        />
-      </v-btn>
+        <v-btn
+          icon
+          flat
+          href="https://x.com/spw_bousai"
+          target="_blank"
+        >
+          <v-img
+            contain
+            width="25"
+            height="25"
+            :src="logoXImg"
+          />
+        </v-btn>
+        <v-btn
+          icon
+          flat
+          href="/hp-qr-code.png"
+          target="_blank"
+        >
+          <v-avatar
+            rounded="0"
+          >
+            <v-img
+              contain
+              src="/hp-qr-code.png"
+            />
+          </v-avatar>
+        </v-btn>
       </template>
     </v-app-bar>
     <client-only>
