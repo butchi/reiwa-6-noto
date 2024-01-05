@@ -35,7 +35,14 @@ const drawer = useState("drawer", () => false)
         variant="text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title>SPW防災</v-toolbar-title>
+      <v-toolbar-title>
+        <nuxt-link
+          to="/"
+          :style="{'text-decoration': 'inherit', 'color': 'inherit'}"
+        >
+          SPW防災
+        </nuxt-link>
+      </v-toolbar-title>
       <v-spacer />
       <v-btn
         icon
