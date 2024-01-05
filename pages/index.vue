@@ -29,7 +29,7 @@ const dialog = ref(false)
           class="pa-3 text-center mx-auto"
         >
           <h2 class="text-h5 mb-1">
-            災害一次情報まとめ
+            SPW防災サイト
           </h2>
           <p class="text-h6 mb-3">
             情報随時更新中
