@@ -41,6 +41,20 @@ useHead({
         <p>このサイトは主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。</p>
 
         <p>個人の有志によって運営されています。</p>
+
+        <v-btn
+          class="mr-5"
+          icon
+          flat
+          href="https://github.com/butchi/reiwa-6-noto"
+          target="_blank"
+        >
+          <v-avatar>
+            <v-icon size="x-large">
+              mdi-github
+            </v-icon>
+          </v-avatar>
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>

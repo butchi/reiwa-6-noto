@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useState } from "nuxt/app"
 
+import logoImg from "@/assets/logo.png"
 import logoXImg from "@/assets/logo-x-black.svg"
 
 const drawerArr = [
@@ -40,6 +41,9 @@ const drawer = useState("drawer", () => false)
           to="/"
           :style="{'text-decoration': 'inherit', 'color': 'inherit'}"
         >
+          <v-avatar size="small">
+            <v-img :src="logoImg" />
+          </v-avatar>
           SPW防災
         </nuxt-link>
       </v-toolbar-title>
@@ -56,19 +60,6 @@ const drawer = useState("drawer", () => false)
           height="25"
           :src="logoXImg"
         />
-      </v-btn>
-      <v-btn
-        class="mr-5"
-        icon
-        flat
-        href="https://github.com/butchi/reiwa-6-noto"
-        target="_blank"
-      >
-        <v-avatar>
-          <v-icon size="x-large">
-            mdi-github
-          </v-icon>
-        </v-avatar>
       </v-btn>
     </v-app-bar>
     <client-only>
