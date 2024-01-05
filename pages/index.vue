@@ -103,8 +103,8 @@ useHead({
         <v-card>
           <v-expansion-panels>
             <v-expansion-panel
-              v-for="linkItem in linkArr"
-              :key="linkItem['source-idx']"
+              v-for="(linkItem, idx) in linkArr"
+              :key="idx"
             >
               <v-expansion-panel-title>
                 <v-list
@@ -143,8 +143,8 @@ useHead({
                     lines="three"
                   >
                     <v-list-item
-                      v-for="childItem in linkItem.childArr"
-                      :key="childItem['source-idx']"
+                      v-for="(childItem, idx) in linkItem.childArr"
+                      :key="idx"
                       :title="childItem.ttl"
                       :subtitle="childItem.desc"
                       class="pa-0"
