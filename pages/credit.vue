@@ -42,7 +42,6 @@ useHead({
           企画・制作: 岩淵夕希物智
           <a
             href="https://x.com/butchi_y"
-            target="_blank"
           >@butchi_y</a>
         </p>
       </v-col>

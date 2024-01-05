@@ -70,13 +70,20 @@ useHead({
                 <v-img :src="logoImg" />
               </v-avatar>
 
-              <v-avatar
-                size="x-large"
-                rounded="0"
-                class="ml-5"
+              <v-btn
+                icon
+                flat
+                href="/hp-qr-code.png"
+                target="_blank"
               >
-                <v-img src="/hp-qr-code.png" />
-              </v-avatar>
+                <v-avatar
+                  size="x-large"
+                  rounded="0"
+                  class="ml-5"
+                >
+                  <v-img src="/hp-qr-code.png" />
+                </v-avatar>
+              </v-btn>
             </v-col>
           </v-row>
 
@@ -118,7 +125,6 @@ useHead({
                       <a
                         v-if="linkItem.url"
                         :href="linkItem.url"
-                        target="_blank"
                       >{{ linkItem.ttl }}</a>
                       <span v-else>{{ linkItem.ttl }}</span>
                     </template>
@@ -149,7 +155,6 @@ useHead({
                         <a
                           v-if="childItem.url"
                           :href="childItem.url"
-                          target="_blank"
                         >{{ childItem.ttl }}</a>
                         <span v-else>{{ childItem.ttl }}</span>
                       </template>

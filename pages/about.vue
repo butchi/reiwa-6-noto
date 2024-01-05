@@ -49,7 +49,6 @@ useHead({
           icon
           flat
           href="https://github.com/butchi/reiwa-6-noto"
-          target="_blank"
         >
           <v-avatar>
             <v-icon size="x-large">
