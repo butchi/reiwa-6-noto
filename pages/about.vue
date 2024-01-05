@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead } from "nuxt/app"
+import { useRuntimeConfig, useHead } from "nuxt/app"
 import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
 

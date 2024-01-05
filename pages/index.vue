@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead } from "nuxt/app"
+import { useRuntimeConfig, useHead } from "nuxt/app"
 import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
 
@@ -108,36 +108,36 @@ useHead({
                 </v-list>
               </v-expansion-panel-title>
               <client-only>
-              <v-expansion-panel-text>
-                <v-list
-                  class="pa-0"
-                  lines="three"
-                >
-                  <v-list-item
-                    v-for="childItem in linkItem.childArr"
-                    :key="childItem['source-idx']"
-                    :title="childItem.ttl"
-                    :subtitle="childItem.desc"
+                <v-expansion-panel-text>
+                  <v-list
                     class="pa-0"
+                    lines="three"
                   >
-                    <template #prepend>
-                      <v-avatar :color="childItem['avatar-bg']">
-                        <v-icon :color="childItem['avatar-color']">
-                          {{ childItem['avatar-icon'] }}
-                        </v-icon>
-                      </v-avatar>
-                    </template>
-                    <template #title>
-                      <a
-                        v-if="childItem.url"
-                        :href="childItem.url"
-                        target="_blank"
-                      >{{ childItem.ttl }}</a>
-                      <span v-else>{{ childItem.ttl }}</span>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </v-expansion-panel-text>
+                    <v-list-item
+                      v-for="childItem in linkItem.childArr"
+                      :key="childItem['source-idx']"
+                      :title="childItem.ttl"
+                      :subtitle="childItem.desc"
+                      class="pa-0"
+                    >
+                      <template #prepend>
+                        <v-avatar :color="childItem['avatar-bg']">
+                          <v-icon :color="childItem['avatar-color']">
+                            {{ childItem['avatar-icon'] }}
+                          </v-icon>
+                        </v-avatar>
+                      </template>
+                      <template #title>
+                        <a
+                          v-if="childItem.url"
+                          :href="childItem.url"
+                          target="_blank"
+                        >{{ childItem.ttl }}</a>
+                        <span v-else>{{ childItem.ttl }}</span>
+                      </template>
+                    </v-list-item>
+                  </v-list>
+                </v-expansion-panel-text>
               </client-only>
             </v-expansion-panel>
           </v-expansion-panels>
