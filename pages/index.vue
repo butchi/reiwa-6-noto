@@ -3,6 +3,8 @@ import { useRuntimeConfig, useHead } from "nuxt/app"
 import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
 
+import logoImg from "@/assets/logo.png"
+
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
@@ -58,9 +60,25 @@ useHead({
           <h2 class="text-h5 mb-1">
             SPW防災サイト
           </h2>
-          <p class="text-h6 mb-3">
+          <p class="text-h6 mb-1">
             情報随時更新中
           </p>
+
+          <v-row class="mb-1">
+            <v-col>
+              <v-avatar size="x-large">
+                <v-img :src="logoImg" />
+              </v-avatar>
+
+              <v-avatar
+                size="x-large"
+                rounded="0"
+                class="ml-5"
+              >
+                <v-img src="/hp-qr-code.png" />
+              </v-avatar>
+            </v-col>
+          </v-row>
 
           <p class="mb-1 text-medium-emphasis text-body-2">
             令和6年能登半島地震に関する一次情報（主に政府発表資料）をまとめたサイトです。リアルタイム更新中なので今後大幅に内容が変わる可能性があります。
