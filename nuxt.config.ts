@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             nodeEnv: process?.env?.NODE_ENV || 'production',
-            baseUrl: process?.env?.NUXT_BASE_URL || 'https://butchi.github.io/reiwa-6-noto/',
+            baseUrl: process?.env?.NUXT_BASE_URL || 'https://bousai.kerokero.jp/',
         },
     },
 })
