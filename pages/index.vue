@@ -71,20 +71,24 @@ useHead({
 
           <v-row class="mb-1">
             <v-col>
-              <v-avatar size="x-large">
+              <v-avatar
+                size="x-large"
+                class="mr-5"
+              >
                 <v-img :src="logoImg" />
               </v-avatar>
 
               <v-btn
                 icon
                 flat
+                size="xlarge"
+                rounded="0"
                 href="/hp-qr-code.png"
                 target="_blank"
               >
                 <v-avatar
                   size="x-large"
                   rounded="0"
-                  class="ml-5"
                 >
                   <v-img src="/hp-qr-code.png" />
                 </v-avatar>
