@@ -22,7 +22,7 @@ const dialog = ref(false)
 
 const title = "SPW防災サイト"
 const siteName = "SPW防災サイト"
-const description = "主に防災に関する一次情報をポストしていきます。"
+const description = "主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。"
 const ogImg = "ogp.png"
 
 useHead({
