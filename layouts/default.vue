@@ -20,6 +20,11 @@ const drawerArr = [
         icon: "mdi-account",
         title: "制作メンバー",
     },
+    {
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSdYFLmBW40iJdHh1SrjWzB0Ys9sQp1Q0qwUO3IJDkABSPUp7g/viewform?usp=sf_link",
+        icon: "mdi-mail",
+        title: "お問い合わせ",
+    },
 ]
 
 const drawer = useState("drawer", () => false)
@@ -89,9 +94,10 @@ const drawer = useState("drawer", () => false)
             v-for="item in drawerArr"
             :key="item.title"
             :to="item.to"
+            :href="item.href"
             :prepend-icon="item.icon"
             :title="item.title"
-            :disabled="!item.to"
+            :disabled="!item.to && !item.href"
           />
         </v-list>
       </v-navigation-drawer>
