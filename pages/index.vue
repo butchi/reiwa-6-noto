@@ -146,11 +146,9 @@ useHead({
                       </v-avatar>
                     </template>
                     <template #title>
-                      <a
-                        v-if="linkItem.url"
-                        :href="linkItem.url"
-                      >{{ linkItem.ttl }}</a>
-                      <span v-else>{{ linkItem.ttl }}</span>
+                      <h3 class="text-h6 mb-1">
+                        {{ linkItem.ttl }}
+                      </h3>
                     </template>
                   </v-list-item>
                 </v-list>
@@ -161,6 +159,33 @@ useHead({
                     class="px-0"
                     lines="three"
                   >
+                    <v-list-item
+                      class="px-0"
+                    >
+                      <template #title>
+                        <v-icon
+                          size="small"
+                          color="grey"
+                          class="mr-1"
+                        >
+                          {{ linkItem['avatar-icon'] }}
+                        </v-icon>
+                        <a
+                          v-if="linkItem.url"
+                          :href="linkItem.url"
+                          :style="{ 'white-space': 'normal' }"
+                        >{{ linkItem.ttl }}</a>
+                        <span
+                          v-else
+                          :style="{ 'white-space': 'normal' }"
+                        >{{ linkItem.ttl }}</span>
+                      </template>
+                      <template #default>
+                        <p class="mt-3">
+                          {{ linkItem.desc }}
+                        </p>
+                      </template>
+                    </v-list-item>
                     <v-list-item
                       v-for="(childItem, childIdx) in linkItem.childArr"
                       :key="childIdx"
