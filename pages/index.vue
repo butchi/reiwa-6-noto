@@ -132,8 +132,6 @@ useHead({
                 >
                   <v-list-item
                     class="pa-0"
-                    :title="linkItem.ttl"
-                    :subtitle="linkItem.desc"
                   >
                     <template #prepend>
                       <v-avatar
@@ -146,9 +144,23 @@ useHead({
                       </v-avatar>
                     </template>
                     <template #title>
-                      <h3 class="text-h6 mb-1">
+                      <h3
+                        v-if="linkItem['ch-name']"
+                        class="text-h6 mb-1"
+                      >
+                        {{ linkItem.ttl }}: {{ linkItem['ch-name'] }}
+                      </h3>
+                      <h3
+                        v-else
+                        class="text-h6 mb-1"
+                      >
                         {{ linkItem.ttl }}
                       </h3>
+                    </template>
+                    <template #subtitle>
+                      <p>
+                        {{ linkItem['ch-desc'] }}
+                      </p>
                     </template>
                   </v-list-item>
                 </v-list>
@@ -159,6 +171,28 @@ useHead({
                     class="px-0"
                     lines="three"
                   >
+                    <v-list-item
+                      v-if="linkItem.tips"
+                      class="px-0"
+                    >
+                      <template #title>
+                        <span>{{ linkItem.ttl }}</span>
+                      </template>
+                      <template #default>
+                        <v-list>
+                          <v-list-item
+                            v-for="(tipsItem, tipsIdx) in linkItem.tips.split('\n')"
+                            :key="tipsIdx"
+                            class="px-0"
+                          >
+                            <template #prepend>
+                              <v-icon>mdi-arrow-right</v-icon>
+                            </template>
+                            {{ tipsItem }}
+                          </v-list-item>
+                        </v-list>
+                      </template>
+                    </v-list-item>
                     <v-list-item
                       class="px-0"
                     >
@@ -171,18 +205,18 @@ useHead({
                           {{ linkItem['avatar-icon'] }}
                         </v-icon>
                         <a
-                          v-if="linkItem.url"
-                          :href="linkItem.url"
+                          v-if="linkItem['ch-url']"
+                          :href="linkItem['ch-url']"
                           :style="{ 'white-space': 'normal' }"
-                        >{{ linkItem.ttl }}</a>
+                        >{{ linkItem['ch-name'] }}</a>
                         <span
                           v-else
                           :style="{ 'white-space': 'normal' }"
-                        >{{ linkItem.ttl }}</span>
+                        >{{ linkItem['ch-name'] }}</span>
                       </template>
                       <template #default>
                         <p class="mt-3">
-                          {{ linkItem.desc }}
+                          {{ linkItem['ch-desc'] }}
                         </p>
                       </template>
                     </v-list-item>
