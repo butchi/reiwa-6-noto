@@ -56,6 +56,20 @@ useHead({
             </v-icon>
           </v-avatar>
         </v-btn>
+
+        <h3 class="mt-5">
+          連絡先
+        </h3>
+
+        <p>
+          お問い合わせ・要望等はXの
+          <a :href="`https://twitter.com/intent/tweet?hashtags=${encodeURIComponent('SPW防災')}`">#SPW防災</a>
+          ハッシュタグ、
+          <a href="https://x.com/spw_bousai">公式Xアカウント</a>
+          へのDM、または
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdYFLmBW40iJdHh1SrjWzB0Ys9sQp1Q0qwUO3IJDkABSPUp7g/viewform?usp=sf_link">お問い合わせフォーム</a>
+          までお願いします。
+        </p>
       </v-col>
     </v-row>
   </v-container>
