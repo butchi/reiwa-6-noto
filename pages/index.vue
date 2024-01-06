@@ -114,6 +114,15 @@ useHead({
           <p class="mb-1 text-medium-emphasis text-body-2">
             令和6年能登半島地震に関する一次情報（主に政府発表資料）をまとめたサイトです。リアルタイム更新中なので今後大幅に内容が変わる可能性があります。
           </p>
+
+          <p>
+            <a
+              class="twitter-share-button"
+              :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(baseUrl)}&hashtags=${encodeURIComponent('SPW防災')}`"
+            >
+              Xでシェア
+            </a>
+          </p>
         </v-sheet>
       </v-col>
     </v-row>
@@ -314,3 +323,10 @@ useHead({
     </client-only>
   </v-container>
 </template>
+
+<style>
+p iframe {
+  width: 100px !important;
+  height: 25px !important;
+}
+</style>

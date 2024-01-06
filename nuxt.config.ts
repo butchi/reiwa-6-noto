@@ -6,6 +6,10 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: 'ja',
             },
+            script: [{
+                src: 'https://platform.twitter.com/widgets.js',
+                async: true,
+            }],
         },
     },
     css: ['vuetify/styles', '@mdi/font/css/materialdesignicons.css'],
