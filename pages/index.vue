@@ -158,15 +158,13 @@ useHead({
               <client-only>
                 <v-expansion-panel-text>
                   <v-list
-                    class="pa-0"
+                    class="px-0"
                     lines="three"
                   >
                     <v-list-item
-                      v-for="(childItem, idx) in linkItem.childArr"
-                      :key="idx"
-                      :title="childItem.ttl"
-                      :subtitle="childItem.desc"
-                      class="pa-0"
+                      v-for="(childItem, childIdx) in linkItem.childArr"
+                      :key="childIdx"
+                      class="px-0"
                     >
                       <template #prepend>
                         <v-avatar :color="childItem.avatarObj.bg">
@@ -179,8 +177,17 @@ useHead({
                         <a
                           v-if="childItem.url"
                           :href="childItem.url"
+                          :style="{ 'white-space': 'normal' }"
                         >{{ childItem.ttl }}</a>
-                        <span v-else>{{ childItem.ttl }}</span>
+                        <span
+                          v-else
+                          :style="{ 'white-space': 'normal' }"
+                        >{{ childItem.ttl }}</span>
+                      </template>
+                      <template #subtitle>
+                        <p class="mt-3">
+                          {{ childItem.desc }}
+                        </p>
                       </template>
                     </v-list-item>
                   </v-list>
