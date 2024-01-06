@@ -16,13 +16,28 @@ const { data: sourceData } = await useAsyncData('sheet', () =>
     queryContent('sheet').findOne()
 )
 
+const { data: avatarData } = await useAsyncData('avatar-list', () =>
+    queryContent('avatar-list').findOne()
+)
+
+const avatarBody = avatarData.value?.body as Array ?? []
 const channelBody = channelData.value?.body as Array ?? []
 const sourceBody = sourceData.value?.body as Array ?? []
+
+const avatarLi = Object.fromEntries(avatarBody.map(item => [item.avatar, item]))
 
 const linkArr = channelBody
 
 linkArr.forEach(linkItem => {
   linkItem.childArr = sourceBody.filter(item => item['site'] === linkItem['site']).reverse()
+
+  linkItem.childArr.forEach(child => {
+    const type = child.url.endsWith(".pdf") ? 'pdf' : 'web'
+    const slug = child.avatar || type
+
+    child.type = type
+    child.avatarObj = avatarLi[slug]
+  })
 })
 
 const dialog = ref(false)
@@ -154,9 +169,9 @@ useHead({
                       class="pa-0"
                     >
                       <template #prepend>
-                        <v-avatar :color="childItem['avatar-bg']">
-                          <v-icon :color="childItem['avatar-color']">
-                            {{ childItem['avatar-icon'] }}
+                        <v-avatar :color="childItem.avatarObj.bg">
+                          <v-icon :color="childItem.avatarObj.color">
+                            {{ childItem.avatarObj.icon }}
                           </v-icon>
                         </v-avatar>
                       </template>
