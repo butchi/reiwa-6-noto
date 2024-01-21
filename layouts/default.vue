@@ -16,6 +16,11 @@ const drawerArr = [
         title: "このサイトについて",
     },
     {
+        to: "/timeline/",
+        icon: "mdi-timeline-text",
+        title: "情報タイムライン",
+    },
+    {
         to: "/credit/",
         icon: "mdi-account",
         title: "制作メンバー",
