@@ -9,7 +9,7 @@ const { data: sourceData } = await useAsyncData('sheet', () =>
   queryContent('sheet').findOne()
 )
 
-const sourceBody = sourceData.value?.body as Array ?? []
+const sourceBody = sourceData.value?.body
 
 const dispatchArr = sourceBody.map(item => {
   const { url, ttl, desc, time } = item
@@ -34,7 +34,7 @@ const firstMilliSec = Math.min(...dispatchArr.map(item => new Date(item.date + "
 
 const latestMilliSec = Math.max(...dispatchArr.map(item => new Date(item.date + " " + item.time).valueOf()))
 
-const totalMilliSec = latestMilliSec - firstMilliSec
+const totalMilliSec = Math.max(latestMilliSec - firstMilliSec, 0)
 
 const totalDayLen = Math.ceil(totalMilliSec / 1000 / 60 / 60 / 24)
 
@@ -55,7 +55,7 @@ const dateEventArr = (new Array(totalDayLen)).fill(0).map((_, i) => {
 const itemArr = dateEventArr.concat(dispatchArr)
 
 itemArr.sort((a, b) => {
-  const getDateTime = (d: string, t) => new Date(d + " " + (t || "23:59")).valueOf()
+  const getDateTime = (d: string, t: string) => new Date(d + " " + (t || "23:59")).valueOf()
 
   return getDateTime(a.date, a.time) - getDateTime(b.date, b.time)
 }).reverse()
@@ -97,7 +97,7 @@ useHead({
           >
             <template #opposite>
               <div
-                v-if="item.eventType === 'pass'"
+                v-if="item.date && item.eventType === 'pass'"
                 class="d-flex align-center"
               >
                 {{ item.date.split("-").map((numStr: string, i: number) => parseInt(numStr) + "年月日"[i]).join("").replaceAll("2024年", "") }}
