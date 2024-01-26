@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useAsyncData, useRuntimeConfig, useHead } from 'nuxt/app'
-import { ref } from 'vue'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
 const { data: sourceData } = await useAsyncData('sheet', () =>
+  // eslint-disable-next-line no-undef
   queryContent('sheet').findOne()
 )
 
@@ -19,9 +19,9 @@ const dispatchArr = sourceArr.map(item => {
   const dateObj = new Date(dateStr)
   const hasTime = dateStr.match(':')
 
-  const eventType = "dispatch"
+  const eventType = 'dispatch'
 
-  const fileType = url.endsWith(".pdf") ? "pdf" : "web"
+  const fileType = url.endsWith('.pdf') ? 'pdf' : 'web'
 
   return ({
     eventType,
@@ -32,7 +32,7 @@ const dispatchArr = sourceArr.map(item => {
     hasTime,
     fileType,
   })
-}).filter(item => item.dateObj.valueOf() >= new Date("2024-01-01").valueOf())
+}).filter(item => item.dateObj.valueOf() >= new Date('2024-01-01').valueOf())
 
 const firstMilliSec = Math.min(...dispatchArr.map(item => item.dateObj.valueOf()))
 
@@ -43,14 +43,14 @@ const totalMilliSec = Math.max(latestMilliSec - firstMilliSec, 0)
 const totalDayLen = Math.ceil(totalMilliSec / 1000 / 60 / 60 / 24)
 
 const dateEventArr = (new Array(totalDayLen)).fill(0).map((_, i) => {
-  const eventType = "pass"
+  const eventType = 'pass'
 
   const url = ''
   const ttl = ''
   const desc = ''
   const fileType = ''
 
-  const dateObj = new Date(new Date("2024-01-01").valueOf() + i * 24 * 60 * 60 * 1000)
+  const dateObj = new Date(new Date('2024-01-01').valueOf() + i * 24 * 60 * 60 * 1000)
 
   const hasTime = false
 
@@ -71,26 +71,26 @@ itemArr.sort((a, b) => {
   return a.dateObj.valueOf() - b.dateObj.valueOf()
 }).reverse()
 
-const title = "SPW防災サイト"
-const siteName = "SPW防災サイト"
-const description = "主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。"
-const ogImg = "ogp.png"
+const title = 'SPW防災サイト'
+const siteName = 'SPW防災サイト'
+const description = '主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。'
+const ogImg = 'ogp.png'
 
 useHead({
-    title,
-    meta: [
-        { property: "title", content: title },
-        { property: "description", content: description },
-        { property: "og:type", content: "website" },
-        { property: "og:site_name", content: siteName },
-        { property: "og:image", content: `${baseUrl}${ogImg}` },
-        { property: "og:url", content: baseUrl },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:site", content: "@spw_bousai" },
-        { name: "twitter:creator", content: "@spw_bousai" },
-    ],
+  title,
+  meta: [
+    { property: 'title', content: title },
+    { property: 'description', content: description },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: siteName },
+    { property: 'og:image', content: `${baseUrl}${ogImg}` },
+    { property: 'og:url', content: baseUrl },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: '@spw_bousai' },
+    { name: 'twitter:creator', content: '@spw_bousai' },
+  ],
 })
 </script>
 
