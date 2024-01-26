@@ -14,6 +14,11 @@ const sourceBody = sourceData.value?.body ?? []
 const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, 'update-date': string }[]
 
 const dispatchArr = sourceArr.map(item => {
+  const { url, ttl, desc } = item
+  const dateStr = item.date || item['update-date'] || ''
+  const dateObj = new Date(dateStr)
+  const hasTime = dateStr.match(':')
+
   const eventType = "dispatch"
 
   const fileType = url.endsWith(".pdf") ? "pdf" : "web"
@@ -23,15 +28,15 @@ const dispatchArr = sourceArr.map(item => {
     url,
     ttl,
     desc,
-    date,
-    time,
+    dateObj,
+    hasTime,
     fileType,
   })
-}).filter(item => new Date(item.date).valueOf() >= new Date("2024-01-01").valueOf())
+}).filter(item => item.dateObj.valueOf() >= new Date("2024-01-01").valueOf())
 
-const firstMilliSec = Math.min(...dispatchArr.map(item => new Date(item.date + " " + item.time).valueOf()))
+const firstMilliSec = Math.min(...dispatchArr.map(item => item.dateObj.valueOf()))
 
-const latestMilliSec = Math.max(...dispatchArr.map(item => new Date(item.date + " " + item.time).valueOf()))
+const latestMilliSec = Math.max(...dispatchArr.map(item => item.dateObj.valueOf()))
 
 const totalMilliSec = Math.max(latestMilliSec - firstMilliSec, 0)
 
@@ -40,23 +45,30 @@ const totalDayLen = Math.ceil(totalMilliSec / 1000 / 60 / 60 / 24)
 const dateEventArr = (new Array(totalDayLen)).fill(0).map((_, i) => {
   const eventType = "pass"
 
-  const date = new Date(new Date("2024-01-01").valueOf() + i * 24 * 60 * 60 * 1000).toISOString().replaceAll(/T.+/g, "")
+  const url = ''
+  const ttl = ''
+  const desc = ''
+  const fileType = ''
 
-  const time = "00:00"
+  const dateObj = new Date(new Date("2024-01-01").valueOf() + i * 24 * 60 * 60 * 1000)
+
+  const hasTime = false
 
   return {
     eventType,
-    date,
-    time,
+    url,
+    ttl,
+    desc,
+    dateObj,
+    hasTime,
+    fileType,
   }
 })
 
 const itemArr = [...dateEventArr, ...dispatchArr]
 
 itemArr.sort((a, b) => {
-  const getDateTime = (d: string, t: string) => new Date(d + " " + (t || "23:59")).valueOf()
-
-  return getDateTime(a.date, a.time) - getDateTime(b.date, b.time)
+  return a.dateObj.valueOf() - b.dateObj.valueOf()
 }).reverse()
 
 const title = "SPW防災サイト"
@@ -96,10 +108,10 @@ useHead({
           >
             <template #opposite>
               <div
-                v-if="item.date && item.eventType === 'pass'"
+                v-if="item.dateObj && item.eventType === 'pass'"
                 class="d-flex align-center"
               >
-                {{ item.date.split("-").map((numStr: string, i: number) => parseInt(numStr) + "年月日"[i]).join("").replaceAll("2024年", "") }}
+                {{ item.dateObj.toLocaleDateString().split('/').map((d, i) => d + "年月日"[i]).join('').replaceAll('2024年', '') }}
               </div>
 
               <div
@@ -107,8 +119,8 @@ useHead({
                 class="d-flex align-center"
               >
                 <span
-                  v-if="item.time"
-                >{{ item.time }}</span>
+                  v-if="item.hasTime"
+                >{{ item.dateObj.toLocaleTimeString().replace(/:00$/, "") }}</span>
               </div>
             </template>
 
