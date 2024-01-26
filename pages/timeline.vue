@@ -9,12 +9,11 @@ const { data: sourceData } = await useAsyncData('sheet', () =>
   queryContent('sheet').findOne()
 )
 
-const sourceBody = sourceData.value?.body
+const sourceBody = sourceData.value?.body ?? []
 
-const dispatchArr = sourceBody.map(item => {
-  const { url, ttl, desc, time } = item
-  const date = item.date || item['update-date']
+const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, 'update-date': string }[]
 
+const dispatchArr = sourceArr.map(item => {
   const eventType = "dispatch"
 
   const fileType = url.endsWith(".pdf") ? "pdf" : "web"
@@ -52,7 +51,7 @@ const dateEventArr = (new Array(totalDayLen)).fill(0).map((_, i) => {
   }
 })
 
-const itemArr = dateEventArr.concat(dispatchArr)
+const itemArr = [...dateEventArr, ...dispatchArr]
 
 itemArr.sort((a, b) => {
   const getDateTime = (d: string, t: string) => new Date(d + " " + (t || "23:59")).valueOf()
