@@ -10,6 +10,10 @@ export default defineNuxtConfig({
                 src: 'https://platform.twitter.com/widgets.js',
                 async: true,
             }],
+            link: [{
+                rel: 'stylesheet',
+                href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+            }],
         },
     },
     css: ['vuetify/styles', '@mdi/font/css/materialdesignicons.css'],
