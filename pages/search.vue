@@ -6,14 +6,18 @@ const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
 const { data: sourceData } = await useAsyncData('sheet', () =>
+  // eslint-disable-next-line no-undef
   queryContent('sheet').findOne()
 )
 
-const sourceBody = sourceData.value?.body as Array ?? []
+const sourceBody = sourceData.value?.body ?? []
 
-const itemArr = sourceBody.map(item => {
+const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, 'update-date': string }[]
+
+const itemArr = sourceArr.map(item => {
   const { url, ttl, desc } = item
-  const date = item.date || item['update-date']
+  const dateStr = item.date || item['update-date']
+  const date = dateStr == null ? '' : new Date(dateStr).toLocaleDateString()
 
   return {
     url,
@@ -95,7 +99,7 @@ useHead({
                 <a :href="item.url">{{ item.ttl }}</a>
               </template>
               <template #item.date="{ item }">
-                {{ item.date || item['update-date'] }}
+                {{ item.date }}
               </template>
               <template #item.desc="{ item }">
                 {{ item.desc.slice(0, 150) }}
