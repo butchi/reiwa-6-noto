@@ -16,11 +16,6 @@ const drawerArr = [
         title: "このサイトについて",
     },
     {
-        to: "/search/",
-        icon: "mdi-note-search",
-        title: "情報検索",
-    },
-    {
         to: "/credit/",
         icon: "mdi-account",
         title: "制作メンバー",
