@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead, useAsyncData } from 'nuxt/app'
 import { ref, onMounted } from 'vue'
+// TODO: 型がうまく読み込めてないのを直す
 import { Loader } from '@googlemaps/js-api-loader'
 
 const runtimeConfig = useRuntimeConfig()
@@ -21,10 +22,12 @@ const mapOptions = {
 }
 
 const { data: sourceData } = await useAsyncData('sheet', () =>
+  // eslint-disable-next-line no-undef
   queryContent('sheet').findOne()
 )
 
 const { data: placeData } = await useAsyncData('place-list', () =>
+  // eslint-disable-next-line no-undef
   queryContent('place-list').findOne()
 )
 
@@ -52,7 +55,8 @@ const pickTxt = (str: string, word: string) => {
 onMounted(()=>{
   loader
   .load()
-  .then(google => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  .then((google: { maps: any }) => {
     const map = new google.maps.Map(gmap.value, mapOptions)
 
     const infoWindow = new google.maps.InfoWindow({
