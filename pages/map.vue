@@ -68,10 +68,10 @@ onMounted(()=>{
       const [lat, lng] = latLng.split(',')
       const position = new google.maps.LatLng(lat, lng)
 
-      const strokeColor =
+      const fillColor =
         place.shindo === '7' ? 'rgb(255, 0, 0)'
-      : place.shindo === '6強' ? 'rgb(255, 60, 0)'
-      : place.shindo === '6弱' ? 'rgb(255, 120, 0)'
+      : place.shindo === '6強' ? 'rgb(255, 0, 0)'
+      : place.shindo === '6弱' ? 'rgb(255, 0, 0)'
       : place.shindo === '5強' ? 'rgb(255, 180, 0)'
       : 'rgb(255, 255, 0)'
 
@@ -80,17 +80,16 @@ onMounted(()=>{
         position,
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: 'yellow',
+          fillColor,
           fillOpacity: 0.5,
-          strokeColor,
-          strokeWeight: 3,
+          strokeWeight: 0,
           scale: 13,
         },
         label: {
           text: 'location_city',
           color: 'black',
           fontFamily: 'Material Icons',
-          fontSize: '18px',
+          fontSize: '16px',
         },
       })
 
