@@ -33,13 +33,20 @@ const { data: placeData } = await useAsyncData('place-list', () =>
 
 const sourceBody = sourceData.value?.body ?? []
 
-const sourceArr = sourceBody as { url: string, ttl: string, desc: string }[]
+const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, "update-date": string }[]
+
+const getDate = (item: { date: string, "update-date": string }) => {
+  const dateStr = item.date || item['update-date'] || ''
+  const dateObj = new Date(dateStr)
+
+  return dateObj
+}
+
+sourceArr.sort((a, b) => getDate(b).valueOf() - getDate(a).valueOf())
 
 const placeBody = placeData.value?.body ?? []
 
 const placeArr = placeBody as { nameJa: string, shortNameJa: string, latLng: string, shindo: string }[]
-
-const sourcePinPtArr = sourceArr.filter((s: { ttl: string, desc: string }) => !placeArr.every((place) => [s.ttl, s.desc].join('').match(place.shortNameJa)))
 
 const pickTxt = (str: string, word: string) => {
   const pos = str.indexOf(word) - 125
