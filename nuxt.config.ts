@@ -24,7 +24,6 @@ export default defineNuxtConfig({
         global: true,
         dirs: ['~/components'],
     },
-    modules: ['@nuxt/content'],
     runtimeConfig: {
         public: {
             nodeEnv: process?.env?.NODE_ENV || 'production',
