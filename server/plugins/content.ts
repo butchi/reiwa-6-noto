@@ -17,9 +17,11 @@ export default defineNitroPlugin(async (nitroApp) => {
                 }),
             })
 
-            const arr = file.body.filter(item => item.desc.startsWith('/'))
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const arr = file.body.filter((item: any) => item.desc.startsWith('/'))
 
-            await Promise.all(arr.map(async item => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            await Promise.all(arr.map(async (item: any) => {
                 try {
                     const xPath = item.desc
 

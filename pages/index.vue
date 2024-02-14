@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead, useAsyncData } from 'nuxt/app'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 // TODO: 型がうまく読み込めてないのを直す
 import { Loader } from '@googlemaps/js-api-loader'
 

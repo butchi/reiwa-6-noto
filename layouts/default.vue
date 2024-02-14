@@ -1,36 +1,41 @@
 <script setup lang="ts">
-import { useState } from "nuxt/app"
+import { useRuntimeConfig, useState } from 'nuxt/app'
 import { ref } from 'vue'
 
 import logoImg from "@/assets/logo.png"
 import logoXImg from "@/assets/logo-x-black.svg"
 
+const runtimeConfig = useRuntimeConfig()
+const baseUrl = runtimeConfig.public?.baseUrl
+
 const dialog = ref(false)
 
 const drawerArr = [
-    {
-        to: "/",
-        icon: "mdi-home",
-        title: "Home",
-    },
-    {
-        to: "/about/",
-        icon: "mdi-information",
-        title: "このサイトについて",
-    },
-    {
-        to: "/credit/",
-        icon: "mdi-account",
-        title: "制作メンバー",
-    },
-    {
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSdYFLmBW40iJdHh1SrjWzB0Ys9sQp1Q0qwUO3IJDkABSPUp7g/viewform?usp=sf_link",
-        icon: "mdi-mail",
-        title: "お問い合わせ",
-    },
+  {
+    to: "/",
+    icon: "mdi-home",
+    title: "Home",
+  },
+  {
+    to: "/about/",
+    icon: "mdi-information",
+    title: "このサイトについて",
+  },
+  {
+    to: "/credit/",
+    icon: "mdi-account",
+    title: "制作メンバー",
+  },
+  {
+    href: "https://docs.google.com/forms/d/e/1FAIpQLSdYFLmBW40iJdHh1SrjWzB0Ys9sQp1Q0qwUO3IJDkABSPUp7g/viewform?usp=sf_link",
+    icon: "mdi-mail",
+    title: "お問い合わせ",
+  },
 ]
 
 const drawer = useState("drawer", () => false)
+
+const title = 'SPW防災サイト'
 </script>
 
 <template>
