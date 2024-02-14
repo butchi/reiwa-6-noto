@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { useRuntimeConfig, useHead, useAsyncData } from 'nuxt/app'
+import { useRuntimeConfig, useHead } from 'nuxt/app'
 import { ref, onMounted } from 'vue'
 // TODO: 型がうまく読み込めてないのを直す
 import { Loader } from '@googlemaps/js-api-loader'
+
+import placeJson from '@/assets/place-list.json'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
@@ -21,19 +23,13 @@ const mapOptions = {
   center: { lat: 37.256556, lng: 136.878639 },
 }
 
-const { data: sourceData } = await useAsyncData('sheet', () =>
-  // eslint-disable-next-line no-undef
-  queryContent('sheet').findOne()
-)
+const sheetUrl = "https://script.google.com/macros/s/AKfycbyX8HQch6pAu7rPVvK_qdVkB9iy-p7TsCV7N_4jnTUeBgKVh5LskFBR29kWL4Ukatm4/exec"
 
-const { data: placeData } = await useAsyncData('place-list', () =>
-  // eslint-disable-next-line no-undef
-  queryContent('place-list').findOne()
-)
+const sourceRes = await fetch(sheetUrl)
 
-const sourceBody = sourceData.value?.body ?? []
+const sourceJson = await sourceRes.json()
 
-const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, "update-date": string }[]
+const sourceArr = sourceJson["items"]
 
 const getDate = (item: { date: string, "update-date": string }) => {
   const dateStr = item.date || item['update-date'] || ''
@@ -42,11 +38,10 @@ const getDate = (item: { date: string, "update-date": string }) => {
   return dateObj
 }
 
-sourceArr.sort((a, b) => getDate(b).valueOf() - getDate(a).valueOf())
+sourceArr.sort((a: { date: string, "update-date": string }, b: { date: string, "update-date": string }) => getDate(b).valueOf() - getDate(a).valueOf())
 
-const placeBody = placeData.value?.body ?? []
 
-const placeArr = placeBody as { nameJa: string, shortNameJa: string, latLng: string, shindo: string }[]
+const placeArr = Object.values(placeJson)
 
 const pickTxt = (str: string, word: string) => {
   const pos = str.indexOf(word) - 125
