@@ -167,7 +167,7 @@ useHead({
       />
     </v-row>
 
-    <v-row v-show="false">
+    <div :style="{ height: 0, overflow: 'hidden' }">
       <v-col class="mb-15">
         <v-card
           v-for="(place, placeIdx) in placeArr"
@@ -207,6 +207,6 @@ useHead({
           </v-card-text>
         </v-card>
       </v-col>
-    </v-row>
+    </div>
   </v-container>
 </template>
