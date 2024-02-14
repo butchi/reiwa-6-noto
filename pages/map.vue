@@ -167,7 +167,7 @@ useHead({
         />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-show="false">
       <v-col class="mb-15">
         <v-card
           v-for="(place, placeIdx) in placeArr"
