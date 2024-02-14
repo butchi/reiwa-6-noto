@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead, useAsyncData } from 'nuxt/app'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 // TODO: 型がうまく読み込めてないのを直す
 import { Loader } from '@googlemaps/js-api-loader'
 
@@ -152,15 +152,21 @@ useHead({
 </script>
 
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <div
-          ref="gmap"
-          :style="{ width: '100%', height: '720px' }"
-        />
-      </v-col>
+  <v-container
+    class="ma-0 pa-0 fill-height"
+    :style="{ 'max-width': '100%' }"
+  >
+    <v-row
+      class="ma-0 pa-0 fill-height"
+      :style="{ 'max-width': '100%' }"
+    >
+      <div
+        ref="gmap"
+        class="w-100 ma-0 pa-0 fill-height"
+        :style="{ 'max-width': '100%' }"
+      />
     </v-row>
+
     <v-row v-show="false">
       <v-col class="mb-15">
         <v-card
