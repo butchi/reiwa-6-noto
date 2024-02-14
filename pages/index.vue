@@ -162,8 +162,13 @@ useHead({
       />
     </v-row>
 
-    <div :style="{ height: 0, overflow: 'hidden' }">
-      <v-col class="mb-15">
+    <div
+      :style="{ width: 0, height: 0, overflow: 'hidden' }"
+    >
+      <v-col
+        class="mb-15"
+        :style="{ width: 0, height: 0, overflow: 'hidden' }"
+      >
         <v-card
           v-for="(place, placeIdx) in placeArr"
           :key="placeIdx"
