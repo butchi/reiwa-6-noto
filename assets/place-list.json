@@ -1,0 +1,306 @@
+{
+  "shika-machi": {
+    "pref": "石川県",
+    "nameJa": "志賀町",
+    "readJa": "しかまち",
+    "shortNameJa": "志賀",
+    "latLng": "37.006295,136.7754817",
+    "shindo": "7"
+  },
+  "nanao-shi": {
+    "pref": "石川県",
+    "nameJa": "七尾市",
+    "readJa": "ななおし",
+    "shortNameJa": "七尾",
+    "latLng": "37.0431298,136.9647836",
+    "shindo": "6強"
+  },
+  "wajima-shi": {
+    "pref": "石川県",
+    "nameJa": "輪島市",
+    "readJa": "わじまし",
+    "shortNameJa": "輪島",
+    "latLng": "37.3877297,136.8980448",
+    "shindo": "6強"
+  },
+  "suzu-shi": {
+    "pref": "石川県",
+    "nameJa": "珠洲市",
+    "readJa": "すずし",
+    "shortNameJa": "珠洲",
+    "latLng": "37.4350644,137.2575387",
+    "shindo": "6強"
+  },
+  "anamizu-machi": {
+    "pref": "石川県",
+    "nameJa": "穴水町",
+    "readJa": "あなみずまち",
+    "shortNameJa": "穴水",
+    "latLng": "37.2310786,136.9097869",
+    "shindo": "6強"
+  },
+  "nakanoto-machi": {
+    "pref": "石川県",
+    "nameJa": "中能登町",
+    "readJa": "なかのとまち",
+    "shortNameJa": "中能登",
+    "latLng": "36.9888883,136.8989741",
+    "shindo": "6弱"
+  },
+  "noto-cho": {
+    "pref": "石川県",
+    "nameJa": "能登町",
+    "readJa": "のとちょう",
+    "shortNameJa": "能登町",
+    "latLng": "37.3103458,137.1453944",
+    "shindo": "6弱"
+  },
+  "kanazawa-shi": {
+    "pref": "石川県",
+    "nameJa": "金沢市",
+    "readJa": "かなざわし",
+    "shortNameJa": "金沢市",
+    "latLng": "36.5610528,136.6539987",
+    "shindo": "5強"
+  },
+  "komatsu-shi": {
+    "pref": "石川県",
+    "nameJa": "小松市",
+    "readJa": "こまつし",
+    "shortNameJa": "小松",
+    "latLng": "36.4086933,136.4429906",
+    "shindo": "5強"
+  },
+  "kaga-shi": {
+    "pref": "石川県",
+    "nameJa": "加賀市",
+    "readJa": "かがし",
+    "shortNameJa": "加賀市",
+    "latLng": "36.302714,136.3123463",
+    "shindo": "5強"
+  },
+  "hakui-shi": {
+    "pref": "石川県",
+    "nameJa": "羽咋市",
+    "readJa": "はくいし",
+    "shortNameJa": "羽咋市",
+    "latLng": "36.8936418,136.7763783",
+    "shindo": "5強"
+  },
+  "kahoku-shi": {
+    "pref": "石川県",
+    "nameJa": "かほく市",
+    "readJa": "かほくし",
+    "shortNameJa": "かほく",
+    "latLng": "36.7197904,136.7042617",
+    "shindo": "5強"
+  },
+  "nomi-shi": {
+    "pref": "石川県",
+    "nameJa": "能美市",
+    "readJa": "のみし",
+    "shortNameJa": "能美市",
+    "latLng": "36.4469906,136.5514939",
+    "shindo": "5強"
+  },
+  "hodatsushimizu-cho": {
+    "pref": "石川県",
+    "nameJa": "宝達志水町",
+    "readJa": "ほうだつしみずちょう",
+    "shortNameJa": "宝達志水",
+    "latLng": "36.8626154,136.7942944",
+    "shindo": "5強"
+  },
+  "nagaoka-shi": {
+    "pref": "新潟県",
+    "nameJa": "長岡市",
+    "readJa": "ながおかし",
+    "shortNameJa": "長岡",
+    "latLng": "37.4465439,138.8463467",
+    "shindo": "6弱"
+  },
+  "niigata-chuo-ku": {
+    "pref": "新潟県",
+    "nameJa": "新潟中央区",
+    "readJa": "にいがたちゅうおうく",
+    "shortNameJa": "中央区",
+    "latLng": "37.9225807,139.0408513",
+    "shindo": "5強"
+  },
+  "niigata-minami-ku": {
+    "pref": "新潟県",
+    "nameJa": "新潟南区",
+    "readJa": "にいがたみなみく",
+    "shortNameJa": "南区",
+    "latLng": "37.7658305,139.0165578",
+    "shindo": "5強"
+  },
+  "niigata-nishi-ku": {
+    "pref": "新潟県",
+    "nameJa": "新潟西区",
+    "readJa": "にいがたにしく",
+    "shortNameJa": "西区",
+    "latLng": "37.8663951,138.9446467",
+    "shindo": "5強"
+  },
+  "niigata-nishikan-ku": {
+    "pref": "新潟県",
+    "nameJa": "新潟西蒲区",
+    "readJa": "にいがたにしかんく",
+    "shortNameJa": "西蒲区",
+    "latLng": "37.7604538,138.8866666",
+    "shindo": "5強"
+  },
+  "sanjo-shi": {
+    "pref": "新潟県",
+    "nameJa": "三条市",
+    "readJa": "さんじょうし",
+    "shortNameJa": "三条",
+    "latLng": "37.636855,138.9591687",
+    "shindo": "5強"
+  },
+  "kashiwazaki-shi": {
+    "pref": "新潟県",
+    "nameJa": "柏崎市",
+    "readJa": "かしわざきし",
+    "shortNameJa": "柏崎",
+    "latLng": "37.3649068,138.5551813",
+    "shindo": "5強"
+  },
+  "mitsuke-shi": {
+    "pref": "新潟県",
+    "nameJa": "見附市",
+    "readJa": "みつけし",
+    "shortNameJa": "見附",
+    "latLng": "37.5316072,138.9102508",
+    "shindo": "5強"
+  },
+  "tsubame-shi": {
+    "pref": "新潟県",
+    "nameJa": "燕市",
+    "readJa": "つばめし",
+    "shortNameJa": "燕市",
+    "latLng": "37.6731551,138.8798818",
+    "shindo": "5強"
+  },
+  "itoigawa-shi": {
+    "pref": "新潟県",
+    "nameJa": "糸魚川市",
+    "readJa": "いといがわし",
+    "shortNameJa": "糸魚川",
+    "latLng": "37.0390333,137.8600801",
+    "shindo": "5強"
+  },
+  "myoko-shi": {
+    "pref": "新潟県",
+    "nameJa": "妙高市",
+    "readJa": "みょうこうし",
+    "shortNameJa": "妙高",
+    "latLng": "37.0252366,138.2508499",
+    "shindo": "5強"
+  },
+  "joetsu-shi": {
+    "pref": "新潟県",
+    "nameJa": "上越市",
+    "readJa": "じょうえつし",
+    "shortNameJa": "上越市",
+    "latLng": "37.1476008,138.2332572",
+    "shindo": "5強"
+  },
+  "sado-shi": {
+    "pref": "新潟県",
+    "nameJa": "佐渡市",
+    "readJa": "さどし",
+    "shortNameJa": "佐渡",
+    "latLng": "38.0182651,138.3658082",
+    "shindo": "5強"
+  },
+  "minamiuonuma-shi": {
+    "pref": "新潟県",
+    "nameJa": "南魚沼市",
+    "readJa": "みなみうおぬまし",
+    "shortNameJa": "南魚沼",
+    "latLng": "37.06555,138.8734643",
+    "shindo": "5強"
+  },
+  "aga-machi": {
+    "pref": "新潟県",
+    "nameJa": "阿賀町",
+    "readJa": "あがまち",
+    "shortNameJa": "阿賀",
+    "latLng": "37.6945261,139.3992458",
+    "shindo": "5強"
+  },
+  "kariwa-mura": {
+    "pref": "新潟県",
+    "nameJa": "刈羽村",
+    "readJa": "かりわむら",
+    "shortNameJa": "刈羽",
+    "latLng": "37.4220701,138.6199358",
+    "shindo": "5強"
+  },
+  "toyama-shi": {
+    "pref": "富山県",
+    "nameJa": "富山市",
+    "readJa": "とやまし",
+    "shortNameJa": "富山市",
+    "latLng": "36.6957499,137.2110711",
+    "shindo": "5強"
+  },
+  "takaoka-shi": {
+    "pref": "富山県",
+    "nameJa": "高岡市",
+    "readJa": "たかおかし",
+    "shortNameJa": "高岡",
+    "latLng": "36.7542615,137.0229471",
+    "shindo": "5強"
+  },
+  "himi-shi": {
+    "pref": "富山県",
+    "nameJa": "氷見市",
+    "readJa": "ひみし",
+    "shortNameJa": "氷見",
+    "latLng": "36.8558838,136.97035",
+    "shindo": "5強"
+  },
+  "oyabe-shi": {
+    "pref": "富山県",
+    "nameJa": "小矢部市",
+    "readJa": "おやべし",
+    "shortNameJa": "小矢部",
+    "latLng": "36.6756104,136.8661674",
+    "shindo": "5強"
+  },
+  "nanto-shi": {
+    "pref": "富山県",
+    "nameJa": "南砺市",
+    "readJa": "なんとし",
+    "shortNameJa": "南砺",
+    "latLng": "36.5574863,136.8728661",
+    "shindo": "5強"
+  },
+  "imizu-shi": {
+    "pref": "富山県",
+    "nameJa": "射水市",
+    "readJa": "いみずし",
+    "shortNameJa": "射水",
+    "latLng": "36.7304431,137.0728155",
+    "shindo": "5強"
+  },
+  "funahashi-mura": {
+    "pref": "富山県",
+    "nameJa": "舟橋村",
+    "readJa": "ふなはしむら",
+    "shortNameJa": "舟橋",
+    "latLng": "36.7035515,137.3050224",
+    "shindo": "5強"
+  },
+  "awara-shi": {
+    "pref": "福井県",
+    "nameJa": "あわら市",
+    "readJa": "あわらし",
+    "shortNameJa": "あわら",
+    "latLng": "36.2113126,136.2265645",
+    "shindo": "5強"
+  }
+}
