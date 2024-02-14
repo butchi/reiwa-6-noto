@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead } from "nuxt/app"
-import { useAsyncData } from 'nuxt/app'
-import { ref } from 'vue'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
@@ -12,21 +10,20 @@ const description = "主に防災に関する公式発表へのリンクを掲�
 const ogImg = "ogp.png"
 
 useHead({
-    title: title + " | " + siteName,
-    meta: [
-        { property: "title", content: title + " | " + siteName },
-        { property: "description", content: description },
-        { property: "og:type", content: "website" },
-        { property: "og:site_name", content: siteName },
-        { property: "og:image", content: `${baseUrl}${ogImg}` },
-        { property: "og:url", content: baseUrl },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:site", content: "@spw_bousai" },
-        { name: "twitter:creator", content: "@spw_bousai" },
-
-    ],
+  title: title + " | " + siteName,
+  meta: [
+    { property: "title", content: title + " | " + siteName },
+    { property: "description", content: description },
+    { property: "og:type", content: "website" },
+    { property: "og:site_name", content: siteName },
+    { property: "og:image", content: `${baseUrl}${ogImg}` },
+    { property: "og:url", content: baseUrl },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:site", content: "@spw_bousai" },
+    { name: "twitter:creator", content: "@spw_bousai" },
+  ],
 })
 </script>
 

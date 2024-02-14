@@ -21,18 +21,18 @@ const otherError = "An error occurred"
 
 <script>
 export default {
-    layout: "empty",
-    props: {
-        error: {
-            type: Object,
-            default: null,
-        },
+  layout: "empty",
+  props: {
+    error: {
+      type: Object,
+      default: null,
     },
-    head() {
-        const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-        return {
-            title,
-        }
-    },
+  },
+  head() {
+    const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    return {
+      title,
+    }
+  },
 }
 </script>

@@ -1,332 +1,212 @@
 <script setup lang="ts">
-import { useRuntimeConfig, useHead } from "nuxt/app"
-import { useAsyncData } from 'nuxt/app'
-import { ref } from 'vue'
-
-import logoImg from "@/assets/logo.png"
+import { useRuntimeConfig, useHead, useAsyncData } from 'nuxt/app'
+import { ref, onMounted } from 'vue'
+// TODO: 型がうまく読み込めてないのを直す
+import { Loader } from '@googlemaps/js-api-loader'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
-const { data: channelData } = await useAsyncData('channel-list', () =>
-    queryContent('channel-list').findOne()
-)
+const gmap = ref<HTMLElement>()
+const info = ref<HTMLElement[]>([])
+
+const loader = new Loader({
+  apiKey: 'AIzaSyCGaJBNEJQnodJB5dK71dcvZjVXFPiP-Zg',
+  version: 'weekly',
+  libraries: ['places'],
+});
+
+const mapOptions = {
+  zoom: 9,
+  center: { lat: 37.256556, lng: 136.878639 },
+}
 
 const { data: sourceData } = await useAsyncData('sheet', () =>
-    queryContent('sheet').findOne()
+  // eslint-disable-next-line no-undef
+  queryContent('sheet').findOne()
 )
 
-const { data: avatarData } = await useAsyncData('avatar-list', () =>
-    queryContent('avatar-list').findOne()
+const { data: placeData } = await useAsyncData('place-list', () =>
+  // eslint-disable-next-line no-undef
+  queryContent('place-list').findOne()
 )
 
-const avatarBody = avatarData.value?.body as Array ?? []
-const channelBody = channelData.value?.body as Array ?? []
-const sourceBody = sourceData.value?.body as Array ?? []
+const sourceBody = sourceData.value?.body ?? []
 
-const avatarLi = Object.fromEntries(avatarBody.map(item => [item.avatar, item]))
+const sourceArr = sourceBody as { url: string, ttl: string, desc: string, date: string, "update-date": string }[]
 
-const linkArr = channelBody
+const getDate = (item: { date: string, "update-date": string }) => {
+  const dateStr = item.date || item['update-date'] || ''
+  const dateObj = new Date(dateStr)
 
-linkArr.forEach(linkItem => {
-  linkItem.childArr = sourceBody.filter(item => item['site'] === linkItem['site']).reverse()
+  return dateObj
+}
 
-  linkItem.childArr.forEach(child => {
-    const type = child.url.endsWith(".pdf") ? 'pdf' : 'web'
-    const slug = child.avatar || type
+sourceArr.sort((a, b) => getDate(b).valueOf() - getDate(a).valueOf())
 
-    child.type = type
-    child.avatarObj = avatarLi[slug]
+const placeBody = placeData.value?.body ?? []
+
+const placeArr = placeBody as { nameJa: string, shortNameJa: string, latLng: string, shindo: string }[]
+
+const pickTxt = (str: string, word: string) => {
+  const pos = str.indexOf(word) - 125
+
+  const startPos = Math.max(pos, 0)
+
+  const prependTxt = pos > 0 ? '…' : ''
+  const appendTxt = str.length > startPos + 150 ? '…' : ''
+
+  return prependTxt + str.slice(startPos, startPos + 150) + appendTxt
+}
+
+onMounted(()=>{
+  loader
+  .load()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  .then((google: { maps: any }) => {
+    const map = new google.maps.Map(gmap.value, mapOptions)
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: '',
+    })
+
+    placeArr.forEach((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
+      const { latLng } = place
+      const [lat, lng] = latLng.split(',')
+      const position = new google.maps.LatLng(lat, lng)
+
+      const fillColor =
+        place.shindo === '7' ? 'rgb(255, 0, 0)'
+      : place.shindo === '6強' ? 'rgb(255, 0, 0)'
+      : place.shindo === '6弱' ? 'rgb(255, 0, 0)'
+      : place.shindo === '5強' ? 'rgb(255, 180, 0)'
+      : 'rgb(255, 255, 0)'
+
+      const marker = new google.maps.Marker({
+        title: place.nameJa,
+        position,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor,
+          fillOpacity: 0.5,
+          strokeWeight: 0,
+          scale: 13,
+        },
+        label: {
+          text: 'location_city',
+          color: 'black',
+          fontFamily: 'Material Icons',
+          fontSize: '16px',
+        },
+      })
+
+      marker.addListener('click', () => {
+        infoWindow.setContent(`
+        <article>
+          <h2>${ place.nameJa }</h2>
+          <ul>${ info.value[idx].innerHTML }</ul>
+        </article>
+        `.trim())
+
+        infoWindow.open({
+          anchor: marker,
+          map,
+        })
+      })
+
+      marker.setMap(map)
+
+      return marker
+    })
+
+    map.addListener('click', () => {
+      infoWindow.close()
+    })
+  })
+  .catch((e:Error) => {
+    console.log(e)
   })
 })
 
-const dialog = ref(false)
-
-const title = "SPW防災サイト"
-const siteName = "SPW防災サイト"
-const description = "主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。"
-const ogImg = "ogp.png"
+const title = 'SPW防災サイト'
+const siteName = 'SPW防災サイト'
+const description = '主に防災に関する公式発表へのリンクを掲載する一次情報まとめサイトです。'
+const ogImg = 'ogp.png'
 
 useHead({
-    title,
-    meta: [
-        { property: "title", content: title },
-        { property: "description", content: description },
-        { property: "og:type", content: "website" },
-        { property: "og:site_name", content: siteName },
-        { property: "og:image", content: `${baseUrl}${ogImg}` },
-        { property: "og:url", content: baseUrl },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:site", content: "@spw_bousai" },
-        { name: "twitter:creator", content: "@spw_bousai" },
-
-    ],
+  title,
+  meta: [
+    { property: 'title', content: title },
+    { property: 'description', content: description },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: siteName },
+    { property: 'og:image', content: `${baseUrl}${ogImg}` },
+    { property: 'og:url', content: baseUrl },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: '@spw_bousai' },
+    { name: 'twitter:creator', content: '@spw_bousai' },
+  ],
 })
 </script>
 
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-sheet
-          elevation="12"
-          max-width="600"
-          rounded="lg"
-          width="100%"
-          class="pa-3 text-center mx-auto"
-        >
-          <h2 class="text-h5 mb-1">
-            SPW防災サイト
-          </h2>
-          <p class="text-h6 mb-1">
-            情報随時更新中
-          </p>
-
-          <v-row class="mb-1">
-            <v-col>
-              <v-avatar
-                size="x-large"
-                class="mr-5"
-              >
-                <v-img :src="logoImg" />
-              </v-avatar>
-
-              <v-btn
-                icon
-                flat
-                size="xlarge"
-                rounded="0"
-                href="/hp-qr-code.png"
-                target="_blank"
-              >
-                <v-avatar
-                  size="x-large"
-                  rounded="0"
-                >
-                  <v-img src="/hp-qr-code.png" />
-                </v-avatar>
-              </v-btn>
-            </v-col>
-          </v-row>
-
-          <p class="mb-1 text-medium-emphasis text-body-2">
-            令和6年能登半島地震に関する一次情報（主に政府発表資料）をまとめたサイトです。リアルタイム更新中なので今後大幅に内容が変わる可能性があります。
-          </p>
-
-          <p>
-            <a
-              class="twitter-share-button"
-              :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(baseUrl)}&hashtags=${encodeURIComponent('SPW防災')}`"
-            >
-              Xでシェア
-            </a>
-          </p>
-        </v-sheet>
-      </v-col>
+  <v-container
+    class="ma-0 pa-0 fill-height"
+    :style="{ 'max-width': '100%' }"
+  >
+    <v-row
+      class="ma-0 pa-0 fill-height"
+      :style="{ 'max-width': '100%' }"
+    >
+      <div
+        ref="gmap"
+        class="w-100 ma-0 pa-0 fill-height"
+        :style="{ 'max-width': '100%' }"
+      />
     </v-row>
-    <v-row>
+
+    <div :style="{ height: 0, overflow: 'hidden' }">
       <v-col class="mb-15">
-        <v-card>
-          <v-expansion-panels>
-            <v-expansion-panel
-              v-for="(linkItem, idx) in linkArr"
-              :key="idx"
-            >
-              <v-expansion-panel-title>
-                <v-list
-                  class="bg-transparent"
-                  lines="three"
+        <v-card
+          v-for="(place, placeIdx) in placeArr"
+          :key="placeIdx"
+          class="mt-3"
+        >
+          <v-card-title>{{ place.nameJa }}</v-card-title>
+          <v-card-text>
+            <div ref="info">
+              <ul
+                v-for="(item, srcIdx) in sourceArr.filter(s => [s.ttl, s.desc].join('').match(place.shortNameJa))"
+                :key="srcIdx"
+              >
+                <li
+                  class="mb-3"
+                  :style="{ 'list-style-type': 'none' }"
                 >
-                  <v-list-item
-                    class="pa-0"
-                  >
-                    <template #prepend>
-                      <v-avatar
-                        class="mt-3"
-                        :color="linkItem['avatar-bg']"
-                      >
-                        <v-icon :color="linkItem['avatar-color']">
-                          {{ linkItem['avatar-icon'] }}
-                        </v-icon>
-                      </v-avatar>
-                    </template>
-                    <template #title>
-                      <h3
-                        v-if="linkItem['ch-name']"
-                        class="text-h6 mb-1"
-                      >
-                        {{ linkItem.ttl }}: {{ linkItem['ch-name'] }}
-                      </h3>
-                      <h3
-                        v-else
-                        class="text-h6 mb-1"
-                      >
-                        {{ linkItem.ttl }}
-                      </h3>
-                    </template>
-                    <template #subtitle>
-                      <p>
-                        {{ linkItem['ch-desc'] }}
-                      </p>
-                    </template>
-                  </v-list-item>
-                </v-list>
-              </v-expansion-panel-title>
-              <client-only>
-                <v-expansion-panel-text>
-                  <v-list
-                    class="px-0"
-                    lines="three"
-                  >
-                    <v-list-item
-                      v-if="linkItem.tips"
-                      class="px-0"
+                  <h2 class="text-h6">
+                    <a :href="item.url">{{ item.ttl }}</a>
+                  </h2>
+                  <p>{{ item.desc.slice(0, 45) }}{{ item.desc.length > 45 ? '…' : '' }}</p>
+                  <p class="text-grey-darken-1">
+                    <span
+                      v-for="(txt, txtIdx) in pickTxt(item.desc, place.shortNameJa).split(place.shortNameJa)"
+                      :key="txtIdx"
                     >
-                      <template #title>
-                        <span>{{ linkItem.ttl }}</span>
-                      </template>
-                      <template #default>
-                        <v-list>
-                          <v-list-item
-                            v-for="(tipsItem, tipsIdx) in linkItem.tips.split('\n')"
-                            :key="tipsIdx"
-                            class="px-0"
-                          >
-                            <template #prepend>
-                              <v-icon>mdi-arrow-right</v-icon>
-                            </template>
-                            {{ tipsItem }}
-                          </v-list-item>
-                        </v-list>
-                      </template>
-                    </v-list-item>
-                    <v-list-item
-                      class="px-0"
-                    >
-                      <template #title>
-                        <v-icon
-                          size="small"
-                          color="grey"
-                          class="mr-1"
-                        >
-                          {{ linkItem['avatar-icon'] }}
-                        </v-icon>
-                        <a
-                          v-if="linkItem['ch-url']"
-                          :href="linkItem['ch-url']"
-                          :style="{ 'white-space': 'normal' }"
-                        >{{ linkItem['ch-name'] }}</a>
-                        <span
-                          v-else
-                          :style="{ 'white-space': 'normal' }"
-                        >{{ linkItem['ch-name'] }}</span>
-                      </template>
-                      <template #default>
-                        <p class="mt-3">
-                          {{ linkItem['ch-desc'] }}
-                        </p>
-                      </template>
-                    </v-list-item>
-                    <v-list-item
-                      v-for="(childItem, childIdx) in linkItem.childArr"
-                      :key="childIdx"
-                      class="px-0"
-                    >
-                      <template #prepend>
-                        <v-avatar :color="childItem.avatarObj.bg">
-                          <v-icon :color="childItem.avatarObj.color">
-                            {{ childItem.avatarObj.icon }}
-                          </v-icon>
-                        </v-avatar>
-                      </template>
-                      <template #title>
-                        <a
-                          v-if="childItem.url"
-                          :href="childItem.url"
-                          :style="{ 'white-space': 'normal' }"
-                        >{{ childItem.ttl }}</a>
-                        <span
-                          v-else
-                          :style="{ 'white-space': 'normal' }"
-                        >{{ childItem.ttl }}</span>
-                      </template>
-                      <template #subtitle>
-                        <p class="mt-3">
-                          {{ childItem.desc }}
-                        </p>
-                      </template>
-                    </v-list-item>
-                  </v-list>
-                </v-expansion-panel-text>
-              </client-only>
-            </v-expansion-panel>
-          </v-expansion-panels>
+                      <b
+                        v-if="txtIdx > 0"
+                        class="font-weight-bold"
+                      > {{ place.shortNameJa }}</b>
+                      {{ txt }}
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </v-card-text>
         </v-card>
       </v-col>
-    </v-row>
-    <client-only>
-      <v-dialog
-        v-model="dialog"
-        width="500"
-      >
-        <v-card title="あなたは…">
-          <v-card-text>
-            <v-row>
-              <v-col md="4">
-                <v-btn
-                  class="w-100"
-                  size="x-large"
-                  color="error"
-                >
-                  被災者
-                </v-btn>
-              </v-col>
-              <v-col md="4">
-                <v-btn
-                  class="w-100"
-                  size="x-large"
-                  color="accent"
-                >
-                  対策中
-                </v-btn>
-              </v-col>
-              <v-col md="4">
-                <v-btn
-                  class="w-100"
-                  size="x-large"
-                  color="primary"
-                >
-                  支援者
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col class="text-center">
-                状況に合わせて遷移します
-              </v-col>
-            </v-row>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-
-            <v-btn
-              text="閉じる"
-              color="primary"
-              @click="dialog = false"
-            />
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </client-only>
+    </div>
   </v-container>
 </template>
-
-<style>
-p iframe {
-  width: 100px !important;
-  height: 25px !important;
-}
-</style>
