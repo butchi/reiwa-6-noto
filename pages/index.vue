@@ -2,7 +2,7 @@
 import { useRuntimeConfig, useHead } from 'nuxt/app'
 import { ref, onMounted } from 'vue'
 // TODO: 型がうまく読み込めてないのを直す
-import { Loader } from '@googlemaps/js-api-loader'
+import * as GMaps from '@googlemaps/js-api-loader'
 
 import placeJson from '@/assets/place-list.json'
 
@@ -11,12 +11,6 @@ const baseUrl = runtimeConfig.public?.baseUrl
 
 const gmap = ref<HTMLElement>()
 const info = ref<HTMLElement[]>([])
-
-const loader = new Loader({
-  apiKey: 'AIzaSyCGaJBNEJQnodJB5dK71dcvZjVXFPiP-Zg',
-  version: 'weekly',
-  libraries: ['places'],
-});
 
 const mapOptions = {
   zoom: 9,
@@ -55,6 +49,14 @@ const pickTxt = (str: string, word: string) => {
 }
 
 onMounted(()=>{
+  const { Loader } = GMaps
+
+const loader = new Loader({
+  apiKey: 'AIzaSyCGaJBNEJQnodJB5dK71dcvZjVXFPiP-Zg',
+  version: 'weekly',
+  libraries: ['places'],
+})
+
   loader
   .load()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -178,7 +180,7 @@ useHead({
           <v-card-text>
             <div ref="info">
               <ul
-                v-for="(item, srcIdx) in sourceArr.filter(s => [s.ttl, s.desc].join('').match(place.shortNameJa))"
+                v-for="(item, srcIdx) in sourceArr.filter((s: any) => [s.ttl, s.desc].join('').match(place.shortNameJa))"
                 :key="srcIdx"
               >
                 <li
