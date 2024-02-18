@@ -221,8 +221,7 @@ useHead({
                       <b
                         v-if="txtIdx > 0"
                         class="font-weight-bold"
-                      > {{ place.shortNameJa }}</b>
-                      {{ txt }}
+                      > {{ place.shortNameJa }}</b>{{ txt }}
                     </span>
                   </p>
                 </li>
