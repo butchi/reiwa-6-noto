@@ -202,7 +202,7 @@ useHead({
           <v-card-text>
             <div ref="info">
               <ul
-                v-for="(item, srcIdx) in sourceArr.filter((s: any) => [s.ttl, s.desc].join('').match(place.shortNameJa))"
+                v-for="(item, srcIdx) in sourceArr.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))"
                 :key="srcIdx"
               >
                 <li
@@ -210,6 +210,18 @@ useHead({
                   :style="{ 'list-style-type': 'none' }"
                 >
                   <h2 class="text-h6">
+                    <v-icon
+                      v-if="item.url.endsWith('.pdf')"
+                      color="red"
+                    >
+                      mdi-file-pdf-box
+                    </v-icon>
+                    <v-icon
+                      v-else
+                      color="grey"
+                    >
+                      mdi-web-box
+                    </v-icon>
                     <a :href="item.url">{{ item.ttl }}</a>
                   </h2>
                   <p>{{ item.desc.slice(0, 45) }}{{ item.desc.length > 45 ? '…' : '' }}</p>
