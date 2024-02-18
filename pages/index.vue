@@ -8,6 +8,8 @@ import placeJson from '@/assets/place-list.json'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
+const gMapApiKey = runtimeConfig.public?.gMapApiKey
+const sheetUrl = runtimeConfig.public?.sheetUrl as string
 
 const gmap = ref<HTMLElement>()
 const info = ref<HTMLElement[]>([])
@@ -16,8 +18,6 @@ const mapOptions = {
   zoom: 9,
   center: { lat: 37.256556, lng: 136.878639 },
 }
-
-const sheetUrl = "https://script.google.com/macros/s/AKfycbytfQ_QIcSjkB3AxRMXQAW7NV4wx70WllkgPwDc3oMiUJgQFscGGYARHFoy3kcKtBQF/exec"
 
 const sourceRes = await fetch(sheetUrl)
 
@@ -52,7 +52,7 @@ onMounted(()=>{
   const { Loader } = GMaps
 
 const loader = new Loader({
-  apiKey: 'AIzaSyCGaJBNEJQnodJB5dK71dcvZjVXFPiP-Zg',
+  apiKey: gMapApiKey,
   version: 'weekly',
   libraries: ['places'],
 })
