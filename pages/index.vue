@@ -25,14 +25,14 @@ const sourceJson = await sourceRes.json()
 
 const sourceArr = sourceJson["items"]
 
-const getDate = (item: { date: string, "update-date": string }) => {
-  const dateStr = item.date || item['update-date'] || ''
-  const dateObj = new Date(dateStr)
+const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
+  const dateStr = item.date || item.updateAt || item.createdAt || ''
+  const dateObj = new Date(dateStr || 0)
 
   return dateObj
 }
 
-sourceArr.sort((a: { date: string, "update-date": string }, b: { date: string, "update-date": string }) => getDate(b).valueOf() - getDate(a).valueOf())
+sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
 
 
 const placeArr = Object.values(placeJson)
