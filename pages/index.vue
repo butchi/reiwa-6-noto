@@ -67,10 +67,8 @@ const loader = new Loader({
       content: '',
     })
 
-    placeArr.forEach((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
-      const { latLng } = place
-      const [lat, lng] = latLng.split(',')
-      const position = new google.maps.LatLng(lat, lng)
+    const getIcon = (idx: number, zoomLevel: number) => {
+      const place = placeArr[idx]
 
       const fillColor =
         place.shindo === '7' ? 'rgb(255, 0, 0)'
@@ -79,16 +77,32 @@ const loader = new Loader({
       : place.shindo === '5強' ? 'rgb(255, 180, 0)'
       : 'rgb(255, 255, 0)'
 
-      const marker = new google.maps.Marker({
-        title: place.nameJa,
-        position,
-        icon: {
+      const offset = zoomLevel <= 11 ? -0.88 : 0
+
+      const anchor = new google.maps.Point(0, offset)
+
+      return {
           path: google.maps.SymbolPath.CIRCLE,
           fillColor,
           fillOpacity: 0.5,
           strokeWeight: 0,
           scale: 13,
-        },
+        anchor,
+      }
+    }
+
+    const markerArr = placeArr.map((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
+      const { latLng } = place
+      const [lat, lng] = latLng.split(',')
+      const position = new google.maps.LatLng(lat, lng)
+
+      const icon = getIcon(idx, map.getZoom())
+
+      const marker = new google.maps.Marker({
+        title: place.nameJa,
+        position,
+        map,
+        icon,
         label: {
           text: 'location_city',
           color: 'black',
@@ -115,6 +129,14 @@ const loader = new Loader({
 
       return marker
     })
+
+    map.addListener('zoom_changed', function() {
+      markerArr.forEach((marker, idx) => {
+        const icon = getIcon(idx, map.getZoom())
+
+        marker.setIcon(icon)
+      })
+    });
 
     map.addListener('click', () => {
       infoWindow.close()
