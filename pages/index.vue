@@ -37,17 +37,6 @@ sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { d
 
 const placeArr = Object.values(placeJson)
 
-const pickTxt = (str: string, word: string) => {
-  const pos = str.indexOf(word) - 125
-
-  const startPos = Math.max(pos, 0)
-
-  const prependTxt = pos > 0 ? '…' : ''
-  const appendTxt = str.length > startPos + 150 ? '…' : ''
-
-  return prependTxt + str.slice(startPos, startPos + 150) + appendTxt
-}
-
 onMounted(()=>{
   const { Loader } = GMaps
 
@@ -82,11 +71,11 @@ const loader = new Loader({
       const anchor = new google.maps.Point(0, offset)
 
       return {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor,
-          fillOpacity: 0.5,
-          strokeWeight: 0,
-          scale: 13,
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor,
+        fillOpacity: 0.5,
+        strokeWeight: 0,
+        scale: 13,
         anchor,
       }
     }
@@ -224,10 +213,9 @@ useHead({
                     </v-icon>
                     <a :href="item.url">{{ item.ttl }}</a>
                   </h2>
-                  <p>{{ item.desc.slice(0, 45) }}{{ item.desc.length > 45 ? '…' : '' }}</p>
                   <p class="text-grey-darken-1">
                     <span
-                      v-for="(txt, txtIdx) in pickTxt(item.desc, place.shortNameJa).split(place.shortNameJa)"
+                      v-for="(txt, txtIdx) in item.desc.split(place.shortNameJa)"
                       :key="txtIdx"
                     >
                       <b
