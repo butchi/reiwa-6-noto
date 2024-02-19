@@ -26,10 +26,10 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            nodeEnv: process?.env?.NODE_ENV || 'production',
-            baseUrl: process?.env?.NUXT_BASE_URL || 'https://bousai.kerokero.jp/',
-            gMapApiKey: process?.env?.GMAP_API_KEY || '',
-            sheetUrl: process?.env?.SHEET_URL || '',
+            nodeEnv: process.env.NODE_ENV || 'production',
+            baseUrl: process.env.NUXT_BASE_URL || 'https://bousai.kerokero.jp/',
+            gMapApiKey: process.env.GMAP_API_KEY || '',
+            sheetUrl: process.env.SHEET_URL || '',
         },
     },
 })
