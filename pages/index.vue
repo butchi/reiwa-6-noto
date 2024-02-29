@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead } from 'nuxt/app'
 import { ref, onMounted } from 'vue'
-// TODO: 型がうまく読み込めてないのを直す
 import * as GMaps from '@googlemaps/js-api-loader'
 
 import placeJson from '@/assets/place-list.json'
@@ -40,23 +39,24 @@ const placeArr = Object.values(placeJson)
 onMounted(()=>{
   const { Loader } = GMaps
 
-const loader = new Loader({
-  apiKey: gMapApiKey,
-  version: 'weekly',
-  libraries: ['places'],
-})
+  const loader = new Loader({
+    apiKey: gMapApiKey,
+    version: 'weekly',
+    libraries: ['places'],
+  })
 
   loader
   .load()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  .then((google: { maps: any }) => {
+  .then((google) => {
+    if (gmap.value == null) return 
+
     const map = new google.maps.Map(gmap.value, mapOptions)
 
     const infoWindow = new google.maps.InfoWindow({
       content: '',
     })
 
-    const getIcon = (idx: number, zoomLevel: number) => {
+    const getIcon = (idx: number, zoomLevel: number = 0) => {
       const place = placeArr[idx]
 
       const fillColor =
@@ -82,7 +82,8 @@ const loader = new Loader({
 
     const markerArr = placeArr.map((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
       const { latLng } = place
-      const [lat, lng] = latLng.split(',')
+      const [lat, lng] = latLng.split(',').map(str => parseFloat(str))
+
       const position = new google.maps.LatLng(lat, lng)
 
       const icon = getIcon(idx, map.getZoom())
