@@ -18,21 +18,7 @@ const mapOptions = {
   center: { lat: 37.256556, lng: 136.878639 },
 }
 
-const sourceRes = await fetch(sheetUrl)
-
-const sourceJson = await sourceRes.json()
-
-const sourceArr = sourceJson["items"]
-
-// const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
-//   const dateStr = item.date || item.updateAt || item.createdAt || ''
-//   const dateObj = new Date(dateStr || 0)
-
-//   return dateObj
-// }
-
-// sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
-
+const sourceArr: {item: { date: string, createdAt: string, updateAt: string }}[] = []
 
 const placeArr = Object.values(placeJson)
 
@@ -132,6 +118,21 @@ onMounted(async () =>{
   map.addListener('click', () => {
     infoWindow.close()
   })
+
+  const sourceRes = await fetch(sheetUrl)
+
+  const sourceJson = await sourceRes.json()
+
+  sourceArr.concat(sourceJson["items"])
+
+  // const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
+  //   const dateStr = item.date || item.updateAt || item.createdAt || ''
+  //   const dateObj = new Date(dateStr || 0)
+
+  //   return dateObj
+  // }
+
+  // sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
 })
 
 const title = 'SPW防災サイト'
