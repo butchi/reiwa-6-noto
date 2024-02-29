@@ -36,7 +36,7 @@ sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { d
 
 const placeArr = Object.values(placeJson)
 
-onMounted(()=>{
+onMounted(async () =>{
   const { Loader } = GMaps
 
   const loader = new Loader({
@@ -45,95 +45,92 @@ onMounted(()=>{
     libraries: ['places'],
   })
 
-  loader
-  .load()
-  .then((google) => {
-    if (gmap.value == null) return 
+  const { Map, InfoWindow } = await loader.importLibrary('maps')
+  const { Point, SymbolPath, LatLng } = await loader.importLibrary("core")
+  const { Marker } = await loader.importLibrary("marker")
 
-    const map = new google.maps.Map(gmap.value, mapOptions)
+  if (gmap.value == null) return 
 
-    const infoWindow = new google.maps.InfoWindow({
-      content: '',
+  const map = new Map(gmap.value, mapOptions)
+
+  const infoWindow = new InfoWindow({
+    content: '',
+  })
+
+  const getIcon = (idx: number, zoomLevel: number = 0) => {
+    const place = placeArr[idx]
+
+    const fillColor =
+      place.shindo === '7' ? 'rgb(255, 0, 0)'
+    : place.shindo === '6強' ? 'rgb(255, 0, 0)'
+    : place.shindo === '6弱' ? 'rgb(255, 0, 0)'
+    : place.shindo === '5強' ? 'rgb(255, 180, 0)'
+    : 'rgb(255, 255, 0)'
+
+    const offset = zoomLevel <= 11 ? -0.88 : 0
+
+    const anchor = new Point(0, offset)
+
+    return {
+      path: SymbolPath.CIRCLE,
+      fillColor,
+      fillOpacity: 0.5,
+      strokeWeight: 0,
+      scale: 13,
+      anchor,
+    }
+  }
+
+  const markerArr = placeArr.map((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
+    const { latLng } = place
+    const [lat, lng] = latLng.split(',').map(str => parseFloat(str))
+
+    const position = new LatLng(lat, lng)
+
+    const icon = getIcon(idx, map.getZoom())
+
+    const marker = new Marker({
+      title: place.nameJa,
+      position,
+      map,
+      icon,
+      label: {
+        text: 'location_city',
+        color: 'black',
+        fontFamily: 'Material Icons',
+        fontSize: '16px',
+      },
     })
 
-    const getIcon = (idx: number, zoomLevel: number = 0) => {
-      const place = placeArr[idx]
+    marker.addListener('click', () => {
+      infoWindow.setContent(`
+      <article>
+        <h2>${ place.nameJa }</h2>
+        <ul>${ info.value[idx].innerHTML }</ul>
+      </article>
+      `.trim())
 
-      const fillColor =
-        place.shindo === '7' ? 'rgb(255, 0, 0)'
-      : place.shindo === '6強' ? 'rgb(255, 0, 0)'
-      : place.shindo === '6弱' ? 'rgb(255, 0, 0)'
-      : place.shindo === '5強' ? 'rgb(255, 180, 0)'
-      : 'rgb(255, 255, 0)'
+      infoWindow.open({
+        anchor: marker,
+        map,
+      })
+    })
 
-      const offset = zoomLevel <= 11 ? -0.88 : 0
+    marker.setMap(map)
 
-      const anchor = new google.maps.Point(0, offset)
+    return marker
+  })
 
-      return {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor,
-        fillOpacity: 0.5,
-        strokeWeight: 0,
-        scale: 13,
-        anchor,
-      }
-    }
-
-    const markerArr = placeArr.map((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
-      const { latLng } = place
-      const [lat, lng] = latLng.split(',').map(str => parseFloat(str))
-
-      const position = new google.maps.LatLng(lat, lng)
-
+  map.addListener('zoom_changed', function() {
+    markerArr.forEach((marker, idx) => {
       const icon = getIcon(idx, map.getZoom())
 
-      const marker = new google.maps.Marker({
-        title: place.nameJa,
-        position,
-        map,
-        icon,
-        label: {
-          text: 'location_city',
-          color: 'black',
-          fontFamily: 'Material Icons',
-          fontSize: '16px',
-        },
-      })
-
-      marker.addListener('click', () => {
-        infoWindow.setContent(`
-        <article>
-          <h2>${ place.nameJa }</h2>
-          <ul>${ info.value[idx].innerHTML }</ul>
-        </article>
-        `.trim())
-
-        infoWindow.open({
-          anchor: marker,
-          map,
-        })
-      })
-
-      marker.setMap(map)
-
-      return marker
+      marker.setIcon(icon)
     })
+  });
 
-    map.addListener('zoom_changed', function() {
-      markerArr.forEach((marker, idx) => {
-        const icon = getIcon(idx, map.getZoom())
-
-        marker.setIcon(icon)
-      })
-    });
-
-    map.addListener('click', () => {
-      infoWindow.close()
-    })
-  })
-  .catch((e:Error) => {
-    console.log(e)
+  map.addListener('click', () => {
+    infoWindow.close()
   })
 })
 
