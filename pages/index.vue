@@ -5,6 +5,23 @@ import * as GMaps from '@googlemaps/js-api-loader'
 
 import placeJson from '@/assets/place-list.json'
 
+interface Source {
+  url: string,
+  place: string,
+  ttl: string,
+  desc: string,
+  createdAt: string,
+  updateAt: string,
+}
+
+interface Place {
+  pref: string,
+  nameJa: string,
+  shortNameJa: string,
+  latLng: string,
+  shindo: string,
+}
+
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 const gMapApiKey = runtimeConfig.public?.gMapApiKey
@@ -21,7 +38,7 @@ const placeArr = Object.values(placeJson)
 
 const loading = ref<boolean>(true)
 
-const sourceArr = ref<{item: { date: string, createdAt: string, updateAt: string }}[]>([])
+const sourceArr = ref<Source[]>([])
 
 const source = computed(() => {
   // const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
@@ -70,12 +87,12 @@ onMounted(async () =>{
   const setContent = () => {
     const place = placeArr[curPlaceIdx.value]
 
-    const itemArr = sourceArr.value.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))
+    const itemArr = sourceArr.value.filter((s: Source) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))
 
     infoWindow.setContent(`
     <article>
       <h2>${ placeArr[curPlaceIdx.value].nameJa }</h2>
-      ${itemArr.map(item => `
+      ${itemArr.map((item: Source) => `
         <ul>
           <li
             class="mb-3"
@@ -121,7 +138,7 @@ onMounted(async () =>{
     }
   }
 
-  const markerArr = placeArr.map((place: { nameJa: string, latLng: string, shindo: string }, idx: number) => {
+  const markerArr = placeArr.map((place: Place, idx: number) => {
     const { latLng } = place
     const [lat, lng] = latLng.split(',').map(str => parseFloat(str))
 
