@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead } from "nuxt/app"
 
+import logoXImg from "@/assets/logo-x-black.svg"
+import butchiYThumbImg from "@/assets/butchi-y-thumb.jpg"
+import shikiThumbImg from "@/assets/shiki-thumb.jpg"
+import bigbenThumbImg from "@/assets/bigben-thumb.jpg"
+
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.public?.baseUrl
 
@@ -31,16 +36,93 @@ useHead({
   <v-container>
     <v-row>
       <v-col>
-        <h2 class="text-h5 mb-3">
+        <h2 class="text-h5 mt-5 mb-3">
           クレジット
         </h2>
 
-        <p>
-          企画・制作: 岩淵夕希物智
-          <a
-            href="https://x.com/butchi_y"
-          >@butchi_y</a>
-        </p>
+        <v-card
+          class="mb-5"
+          max-width="800"
+        >
+          <v-list lines="two">
+            <v-list-item
+              subtitle="代表・開発"
+              title="岩淵夕希物智"
+            >
+              <template #prepend>
+                <v-avatar>
+                  <v-img :src="butchiYThumbImg" />
+                </v-avatar>
+              </template>
+
+              <template #append>
+                <v-btn
+                  icon
+                  flat
+                  href="https://x.com/butchi_y"
+                >
+                  <v-img
+                    contain
+                    width="25"
+                    height="25"
+                    :src="logoXImg"
+                  />
+                </v-btn>
+              </template>
+            </v-list-item>
+            <v-list-item
+              subtitle="サポートメンバー"
+              title="Shiki"
+            >
+              <template #prepend>
+                <v-avatar>
+                  <v-img :src="shikiThumbImg" />
+                </v-avatar>
+              </template>
+
+              <template #append>
+                <v-btn
+                  icon
+                  flat
+                  href="https://x.com/sciencecafe_mc2"
+                >
+                  <v-img
+                    contain
+                    width="25"
+                    height="25"
+                    :src="logoXImg"
+                  />
+                </v-btn>
+              </template>
+            </v-list-item>
+
+            <v-list-item
+              subtitle="サポートメンバー"
+              title="bigben"
+            >
+              <template #prepend>
+                <v-avatar>
+                  <v-img :src="bigbenThumbImg" />
+                </v-avatar>
+              </template>
+
+              <template #append>
+                <v-btn
+                  icon
+                  flat
+                  href="https://x.com/bigbenbigben"
+                >
+                  <v-img
+                    contain
+                    width="25"
+                    height="25"
+                    :src="logoXImg"
+                  />
+                </v-btn>
+              </template>
+            </v-list-item>
+          </v-list>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
