@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig, useHead } from 'nuxt/app'
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import * as GMaps from '@googlemaps/js-api-loader'
 
 import placeJson from '@/assets/place-list.json'
@@ -18,11 +18,36 @@ const mapOptions = {
   center: { lat: 37.256556, lng: 136.878639 },
 }
 
-const sourceArr: {item: { date: string, createdAt: string, updateAt: string }}[] = []
-
 const placeArr = Object.values(placeJson)
 
+const loading = ref<boolean>(true)
+
+const sourceArr = ref<{item: { date: string, createdAt: string, updateAt: string }}[]>([])
+
+const source = computed(() => {
+  // const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
+  //   const dateStr = item.date || item.updateAt || item.createdAt || ''
+  //   const dateObj = new Date(dateStr || 0)
+
+  //   return dateObj
+  // }
+
+  // sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
+
+  return sourceArr.value
+})
+
+const curPlaceIdx = ref<number>(-1)
+
 onMounted(async () =>{
+  fetch(sheetUrl).then(async res => {
+    const json = await res.json()
+
+    sourceArr.value = json["items"]
+
+    loading.value = false
+  })
+
   const { Loader } = GMaps
 
   const loader = new Loader({
@@ -42,6 +67,15 @@ onMounted(async () =>{
   const infoWindow = new InfoWindow({
     content: '',
   })
+
+  const setContent = () => {
+    infoWindow.setContent(`
+    <article>
+      <h2>${ placeArr[curPlaceIdx.value].nameJa }</h2>
+      <ul>${ info.value[curPlaceIdx.value].innerHTML }</ul>
+    </article>
+    `.trim())
+  }
 
   const getIcon = (idx: number, zoomLevel: number = 0) => {
     const place = placeArr[idx]
@@ -89,12 +123,9 @@ onMounted(async () =>{
     })
 
     marker.addListener('click', () => {
-      infoWindow.setContent(`
-      <article>
-        <h2>${ place.nameJa }</h2>
-        <ul>${ info.value[idx].innerHTML }</ul>
-      </article>
-      `.trim())
+      curPlaceIdx.value = idx
+
+      setContent()
 
       infoWindow.open({
         anchor: marker,
@@ -118,22 +149,10 @@ onMounted(async () =>{
   map.addListener('click', () => {
     infoWindow.close()
   })
-
-  const sourceRes = await fetch(sheetUrl)
-
-  const sourceJson = await sourceRes.json()
-
-  sourceArr.concat(sourceJson["items"])
-
-  // const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
-  //   const dateStr = item.date || item.updateAt || item.createdAt || ''
-  //   const dateObj = new Date(dateStr || 0)
-
-  //   return dateObj
-  // }
-
-  // sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
 })
+
+// const hiddenStyle = { overflow: 'visible' }
+const hiddenStyle = { width: 0, height: 0, overflow: 'hidden' }
 
 const title = 'SPW防災サイト'
 const siteName = 'SPW防災サイト'
@@ -174,12 +193,24 @@ useHead({
       />
     </v-row>
 
+    <v-dialog
+      v-model:model-value="loading"
+      width="32"
+      height="32"
+      persistent
+    >
+      <v-progress-circular
+        color="primary"
+        indeterminate
+      />
+    </v-dialog>
+
     <div
-      :style="{ width: 0, height: 0, overflow: 'hidden' }"
+      :style="hiddenStyle"
     >
       <v-col
         class="mb-15"
-        :style="{ width: 0, height: 0, overflow: 'hidden' }"
+        :style="hiddenStyle"
       >
         <v-card
           v-for="(place, placeIdx) in placeArr"
@@ -190,7 +221,7 @@ useHead({
           <v-card-text>
             <div ref="info">
               <ul
-                v-for="(item, srcIdx) in sourceArr.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))"
+                v-for="(item, srcIdx) in source.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))"
                 :key="srcIdx"
               >
                 <li
