@@ -11,7 +11,6 @@ const gMapApiKey = runtimeConfig.public?.gMapApiKey
 const sheetUrl = runtimeConfig.public?.sheetUrl as string
 
 const gmap = ref<HTMLElement>()
-const info = ref<HTMLElement[]>([])
 
 const mapOptions = {
   zoom: 9,
@@ -69,10 +68,31 @@ onMounted(async () =>{
   })
 
   const setContent = () => {
+    const place = placeArr[curPlaceIdx.value]
+
+    const itemArr = sourceArr.value.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))
+
     infoWindow.setContent(`
     <article>
       <h2>${ placeArr[curPlaceIdx.value].nameJa }</h2>
-      <ul>${ info.value[curPlaceIdx.value].innerHTML }</ul>
+      ${itemArr.map(item => `
+        <ul>
+          <li
+            class="mb-3"
+            style="list-style-type: none;"
+          >
+            <h2 class="text-h6">
+              ${item.url.endsWith('.pdf') ? '<span>[PDF]</span>' : ''}
+              <a href="${item.url}">${item.ttl}</a>
+            </h2>
+            <p class="text-grey-darken-1">${
+              item.desc.split(place.shortNameJa).join(`<b
+                class="font-weight-bold"
+              >${place.shortNameJa}</b>`) || item.desc
+            }</p>
+          </li>
+        </ul>
+        `).join('')}
     </article>
     `.trim())
   }
@@ -204,62 +224,5 @@ useHead({
         indeterminate
       />
     </v-dialog>
-
-    <div
-      :style="hiddenStyle"
-    >
-      <v-col
-        class="mb-15"
-        :style="hiddenStyle"
-      >
-        <v-card
-          v-for="(place, placeIdx) in placeArr"
-          :key="placeIdx"
-          class="mt-3"
-        >
-          <v-card-title>{{ place.nameJa }}</v-card-title>
-          <v-card-text>
-            <div ref="info">
-              <ul
-                v-for="(item, srcIdx) in source.filter((s: any) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))"
-                :key="srcIdx"
-              >
-                <li
-                  class="mb-3"
-                  :style="{ 'list-style-type': 'none' }"
-                >
-                  <h2 class="text-h6">
-                    <v-icon
-                      v-if="item.url.endsWith('.pdf')"
-                      color="red"
-                    >
-                      mdi-file-pdf-box
-                    </v-icon>
-                    <v-icon
-                      v-else
-                      color="grey"
-                    >
-                      mdi-web-box
-                    </v-icon>
-                    <a :href="item.url">{{ item.ttl }}</a>
-                  </h2>
-                  <p class="text-grey-darken-1">
-                    <span
-                      v-for="(txt, txtIdx) in item.desc.split(place.shortNameJa)"
-                      :key="txtIdx"
-                    >
-                      <b
-                        v-if="txtIdx > 0"
-                        class="font-weight-bold"
-                      > {{ place.shortNameJa }}</b>{{ txt }}
-                    </span>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </div>
   </v-container>
 </template>
