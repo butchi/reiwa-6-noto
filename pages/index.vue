@@ -232,14 +232,24 @@ useHead({
 
     <v-dialog
       v-model:model-value="loading"
-      width="32"
+      class="text-center"
+      width="128"
       height="32"
       persistent
     >
-      <v-progress-circular
-        color="primary"
-        indeterminate
-      />
+      <v-row>
+        <v-col>
+          <v-progress-circular
+            color="primary"
+            indeterminate
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <span class="text-caption">ロード中</span>
+        </v-col>
+      </v-row>
     </v-dialog>
   </v-container>
 </template>
