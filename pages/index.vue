@@ -11,7 +11,7 @@ interface Source {
   ttl: string,
   desc: string,
   createdAt: string,
-  updateAt: string,
+  updatedAt: string,
 }
 
 interface Place {
@@ -39,19 +39,6 @@ const placeArr = Object.values(placeJson)
 const loading = ref<boolean>(true)
 
 const sourceArr = ref<Source[]>([])
-
-const source = computed(() => {
-  // const getDate = (item: { date: string, createdAt: string, updateAt: string }) => {
-  //   const dateStr = item.date || item.updateAt || item.createdAt || ''
-  //   const dateObj = new Date(dateStr || 0)
-
-  //   return dateObj
-  // }
-
-  // sourceArr.sort((a: { date: string, createdAt: string, updateAt: string }, b: { date: string, createdAt: string, updateAt: string }) => getDate(b).valueOf() - getDate(a).valueOf())
-
-  return sourceArr.value
-})
 
 const curPlaceIdx = ref<number>(-1)
 
@@ -88,6 +75,15 @@ onMounted(async () =>{
     const place = placeArr[curPlaceIdx.value]
 
     const itemArr = sourceArr.value.filter((s: Source) => s.place.match(place.shortNameJa) || (s.url.endsWith('.pdf') && (s.ttl.match(place.shortNameJa) || s.ttl.match(place.pref))))
+
+    const getDate = (item: Source) => {
+      const dateStr = item.updatedAt || item.createdAt || ''
+      const dateObj = new Date(dateStr || 0)
+
+      return dateObj
+    }
+
+    itemArr.sort((a: Source, b: Source) => getDate(b).valueOf() - getDate(a).valueOf())
 
     infoWindow.setContent(`
     <article>
