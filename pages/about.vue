@@ -70,12 +70,17 @@ useHead({
           </v-btn>
         </p>
 
+        <p class="mt-3">
+          サイト制作の経緯などについては
+          <a href="https://blog.yu.butchi.jp/post/reiwa-6-noto-spw-bousai/">こちら</a>
+          のブログ記事をご覧ください。
+        </p>
 
         <h3 class="mt-5">
           連絡先
         </h3>
 
-        <p>
+        <p class="mt-3">
           お問い合わせ・要望等はXの
           <a :href="`https://twitter.com/intent/tweet?hashtags=${encodeURIComponent('SPW防災')}`">#SPW防災</a>
           ハッシュタグ、
