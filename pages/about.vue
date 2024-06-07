@@ -41,18 +41,35 @@ useHead({
 
         <p>本プロジェクトはオープンソースです。</p>
 
-        <v-btn
-          class="mr-5"
-          icon
-          flat
-          href="https://github.com/butchi/reiwa-6-noto"
-        >
-          <v-avatar>
-            <v-icon size="x-large">
+        <p class="mt-3">
+          <v-btn
+            href="https://github.com/butchi/reiwa-6-noto"
+            color="primary"
+          >
+            <v-icon
+              size="x-large"
+              class="mr-3"
+            >
               mdi-github
             </v-icon>
-          </v-avatar>
-        </v-btn>
+            本サイトのリポジトリ
+          </v-btn>
+        </p>
+        <p class="mt-3">
+          <v-btn
+            href="https://github.com/butchi/reiwa-6-noto-crawler"
+            color="primary"
+          >
+            <v-icon
+              size="x-large"
+              class="mr-3"
+            >
+              mdi-github
+            </v-icon>
+            クローラーのリポジトリ
+          </v-btn>
+        </p>
+
 
         <h3 class="mt-5">
           連絡先
