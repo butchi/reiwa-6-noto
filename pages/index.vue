@@ -95,7 +95,7 @@ onMounted(async () =>{
             class="mb-3"
             style="list-style-type: none;"
           >
-            <span>📅${item.updatedAt?.split('T')?.[0]?.split('-')?.map((item, i) => item + '年月日'[i])?.join('')}</span>
+            <span>📅${item.updatedAt?.split('T')?.[0]?.split('-')?.map((item, i) => parseInt(item) + '年月日'[i])?.join('')}</span>
             <span>&nbsp;</span>
             <span>🔗${new URL(item.url).hostname}</span>
             <h2 class="text-h6">
