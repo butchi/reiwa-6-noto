@@ -88,6 +88,7 @@ onMounted(async () =>{
     infoWindow.setContent(`
     <article>
       <h2>${ placeArr[curPlaceIdx.value].nameJa }</h2>
+      <small>※ 日付はデータ取得日</small>
       ${itemArr.map((item: Source) => `
         <ul>
           <li
